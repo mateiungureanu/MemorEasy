@@ -3,5 +3,5 @@
 ### ECHIPA:
 Ungureanu Matei-Stefan;
 Sarighioleanu Sebastian Laurentiu;
-Telu Mihai-Sebasian
+Telu Mihai-Sebastian
 ## User stories: https://sarighioleanulaurentiu.atlassian.net/jira/software/projects/MEMEASY/boards/34
