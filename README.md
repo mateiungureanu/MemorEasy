@@ -1,7 +1,9 @@
 ﻿# Flashcards app - Java
+
 ## Metode de Dezvoltare Software (2024-2025)
 
 ## Table of contents
+
 + [Members](#members)
 + [Backlog](#backlog)
 
@@ -11,6 +13,6 @@
 + Sarighioleanu Sebastian-Laurentiu
 + Telu Mihai-Sebastian
 
-### Backlog: 
+### Backlog:
 
 https://sarighioleanulaurentiu.atlassian.net/jira/software/projects/MEMEASY/boards/34
