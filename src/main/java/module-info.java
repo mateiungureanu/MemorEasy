@@ -10,8 +10,6 @@ module com.unibuc.mds.memoreasy.memoreasy {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    opens com.unibuc.mds.memoreasy.memoreasy to javafx.fxml;
-    exports com.unibuc.mds.memoreasy.memoreasy;
 
     exports com.unibuc.mds.memoreasy;
     exports com.unibuc.mds.memoreasy.Controllers;
@@ -23,5 +21,6 @@ module com.unibuc.mds.memoreasy.memoreasy {
     opens com.unibuc.mds.memoreasy.Views.Flashcards to javafx.fxml;
     opens com.unibuc.mds.memoreasy.Views.Categories to javafx.fxml;
     opens com.unibuc.mds.memoreasy.Views.AllCategories to javafx.fxml;
+    opens com.unibuc.mds.memoreasy.Views to javafx.fxml;
 
 }

@@ -15,8 +15,8 @@ public class Main extends Application {
     }
 
     public void start(Stage stage)throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/HomePage/HomePageView.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/FlashcardSetView.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/HomePage/HomePageView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/FlashcardSetView.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/FlashcardView.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/CategoryView.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
