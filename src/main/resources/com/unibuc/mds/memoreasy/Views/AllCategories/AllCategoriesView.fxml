@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.AllCategoriesController">
     <HBox layoutX="-1.0" layoutY="-1.0" prefHeight="361.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <fx:include source="../MainMenuView.fxml" />
@@ -34,9 +29,8 @@
                                     </Label>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                                         <children>
-                                            <Button mnemonicParsing="false" styleClass="btn-success" text="NEW" />
-                                            <Button mnemonicParsing="false" styleClass="btn-info" text="IMPORT" />
-                                            <Button mnemonicParsing="false" styleClass="btn-warning" text="EXPORT" />
+                                            <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createCategory" styleClass="btn-success" text="NEW" />
+                                            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteCategory" styleClass="btn-danger" text="DELETE" />
                                         </children>
                                     </HBox>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by">
@@ -48,7 +42,8 @@
                                         </font>
                                     </Text>
                                     <ChoiceBox prefWidth="150.0" />
-                                    <Pagination maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0" prefWidth="561.0" VBox.vgrow="ALWAYS" />
+                                    <Pagination fx:id="pagination" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0" prefWidth="561.0" VBox.vgrow="ALWAYS" />
+                           <Label fx:id="atentionare" />
                                 </children>
                             </VBox>
                         </content>

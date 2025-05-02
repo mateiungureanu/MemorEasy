@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.LoginController">
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50"/>
+    </padding>
+
+    <Label text="MemorEasy" style="-fx-font-size: 24px; -fx-font-weight: bold;">
+        <VBox.margin>
+            <Insets bottom="20"/>
+        </VBox.margin>
+    </Label>
+
+    <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Login">
+                <content>
+                    <VBox spacing="10">
+                        <TextField fx:id="loginUsername" promptText="Username"/>
+                        <PasswordField fx:id="loginPassword" promptText="Password"/>
+                        <Button text="Login" onAction="#handleLogin" styleClass="btn-primary"/>
+                        <Label fx:id="loginError" style="-fx-text-fill: red;"/>
+                    </VBox>
+                </content>
+            </Tab>
+            <Tab text="Register">
+                <content>
+                    <VBox spacing="10">
+                        <TextField fx:id="registerUsername" promptText="Username"/>
+                        <PasswordField fx:id="registerPassword" promptText="Password"/>
+                        <PasswordField fx:id="confirmPassword" promptText="Confirm Password"/>
+                        <Button text="Register" onAction="#handleRegister" styleClass="btn-success"/>
+                        <Label fx:id="registerError" style="-fx-text-fill: red;"/>
+                    </VBox>
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+</VBox> 
