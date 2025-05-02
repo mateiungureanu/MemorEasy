@@ -104,13 +104,18 @@ public class AllCategoriesController implements Initializable {
 
     public void deleteCategory(ActionEvent event) throws IOException {
         if (event.getSource() == buttonDelete) {
-            Parent root = load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/DeleteCategoryView.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            stage.setScene(scene);
-            DeleteCategoryController.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
-            stage.show();
+            if(!categories.isEmpty()) {
+                Parent root = load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/DeleteCategoryView.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                stage.setScene(scene);
+                DeleteCategoryController.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
+                stage.show();
+            }
+            else{
+                atentionare.setText("You have not created any categories!");
+            }
         }
     }
 
