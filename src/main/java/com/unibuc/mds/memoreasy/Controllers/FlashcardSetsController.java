@@ -14,6 +14,9 @@ import java.util.List;
 public class FlashcardSetsController {
 
     @FXML
+    private Label labelChapter;
+
+    @FXML
     private Pagination pagination;
 
     private final List<Flashcard> flashcards = List.of(
@@ -21,6 +24,11 @@ public class FlashcardSetsController {
             new Flashcard("What is Polymorphism?", "Ability of objects to take many forms."),
             new Flashcard("What is Inheritance?", "Mechanism where one class acquires another.")
     );
+
+    public void addChapterName(String string){
+        labelChapter.setText(labelChapter.getText()+" "+string);
+    }
+
 
     @FXML
     public void initialize() {

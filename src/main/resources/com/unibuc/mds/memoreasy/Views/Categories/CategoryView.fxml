@@ -27,21 +27,27 @@
                                             <Font size="30.0" />
                                         </font>
                                     </Label>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                         <children>
-                                            <Button mnemonicParsing="false" styleClass="btn-success" text="NEW" />
+                                            <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createChapter" styleClass="btn-success" text="NEW" />
+                                 <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteChapter" styleClass="btn-danger" text="DELETE" />
                                         </children>
                                     </HBox>
+                           <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Chapters">
+                              <font>
+                                 <Font size="23.0" />
+                              </font>
+                           </Label>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by">
                                         <VBox.margin>
-                                            <Insets bottom="-20.0" />
+                                            <Insets bottom="-20.0" top="-20.0" />
                                         </VBox.margin>
                                         <font>
                                             <Font size="22.0" />
                                         </font>
                                     </Text>
                                     <ChoiceBox prefWidth="150.0" />
-                                    <Pagination maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0" prefWidth="561.0" VBox.vgrow="ALWAYS" />
+                                    <Pagination fx:id="pagination" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0" prefWidth="561.0" VBox.vgrow="ALWAYS" />
                                 </children>
                             </VBox>
                         </content>

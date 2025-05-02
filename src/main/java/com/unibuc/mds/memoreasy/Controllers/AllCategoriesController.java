@@ -40,7 +40,7 @@ public class AllCategoriesController implements Initializable {
     private Label atentionare;
 
     private Node createPage(int index) {
-        Button myButton = new Button("Click me to explore this category!");
+        Button myButton = new Button(categories.get(index).getName());
         AnchorPane myPane = new AnchorPane();
         myPane.getChildren().add(myButton);
         myButton.setOnAction(event -> {
@@ -51,6 +51,7 @@ public class AllCategoriesController implements Initializable {
                 root = loader.load();
                 CategoryController controller = loader.getController();
                 controller.addCategoryName(categories.get(index).getName());
+                controller.setCategory_id(categories.get(index).getId_category());
 
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
