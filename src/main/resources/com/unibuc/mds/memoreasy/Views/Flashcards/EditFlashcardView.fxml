@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.EditFlashcardController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Edit Flashcard" style="-fx-font-size: 20px;"/>
+
+    <TextField fx:id="questionField" promptText="Question"/>
+    <TextField fx:id="answerField" promptText="Answer" />
+    <ComboBox fx:id="chapterComboBox" promptText="Select Chapter"/>
+
+    <Button text="Save Changes" onAction="#handleEditFlashcard"/>
+    <Label fx:id="errorLabel" textFill="red"/>
+</VBox>

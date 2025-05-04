@@ -20,9 +20,9 @@ public class FlashcardSetsController {
     private Pagination pagination;
 
     private final List<Flashcard> flashcards = List.of(
-            new Flashcard("What is Java?", "A programming language."),
-            new Flashcard("What is Polymorphism?", "Ability of objects to take many forms."),
-            new Flashcard("What is Inheritance?", "Mechanism where one class acquires another.")
+            new Flashcard(1,"What is Java?", "A programming language."),
+            new Flashcard(2,"What is Polymorphism?", "Ability of objects to take many forms."),
+            new Flashcard(3,"What is Inheritance?", "Mechanism where one class acquires another.")
     );
 
     public void addChapterName(String string){
