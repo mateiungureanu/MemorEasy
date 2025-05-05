@@ -23,7 +23,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -102,10 +101,11 @@ public class CategoryController implements Initializable {
 
         myButton.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/FlashcardSetView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/ChapterView.fxml"));
                 Parent root = loader.load();
-                FlashcardSetsController controller = loader.getController();
-                controller.addChapterName(chapters.get(index).getName());
+                ChapterController controller = loader.getController();
+                controller.setChapterName(chapters.get(index).getName());
+                controller.setChapterId(chapters.get(index).getChapterId());
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -153,7 +153,7 @@ public class CategoryController implements Initializable {
                 controller.setCategoryId(category_id);
                 controller.setCategoryName(category_name);
                 stage.setScene(scene);
-                DeleteChapterController.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getId_chapter());
+                DeleteChapterController.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getChapterId());
                 stage.show();
             }
             else{

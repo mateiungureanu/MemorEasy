@@ -20,4 +20,8 @@ public class Flashcard {
     public String getAnswer() {
         return answer;
     }
+
+    public void setId_flashcard(int id_flashcard) {
+        this.id_flashcard = id_flashcard;
+    }
 }

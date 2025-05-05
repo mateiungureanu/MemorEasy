@@ -6,24 +6,24 @@ import java.util.Date;
 public class Chapter {
 
 
-    private int id_chapter;
-    private int id_category;
+    private int chapterId;
+    private int categoryId;
     private String name;
     private LocalDateTime last_accessed;
 
     public Chapter(int id1, int id2, String n, LocalDateTime date) {
-        id_chapter=id1;
-        id_category=id2;
+        chapterId = id1;
+        categoryId = id2;
         name=n;
         last_accessed=date;
     }
 
-    public int getId_chapter() {
-        return id_chapter;
+    public int getChapterId() {
+        return chapterId;
     }
 
-    public int getId_category() {
-        return id_category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
     public String getName() {
@@ -34,12 +34,12 @@ public class Chapter {
         return last_accessed;
     }
 
-    public void setId_chapter(int id_chapter) {
-        this.id_chapter = id_chapter;
+    public void setChapterId(int id_chapter) {
+        this.chapterId = id_chapter;
     }
 
-    public void setId_category(int id_category) {
-        this.id_category = id_category;
+    public void setCategoryId(int id_category) {
+        this.categoryId = id_category;
     }
 
     public void setName(String name) {

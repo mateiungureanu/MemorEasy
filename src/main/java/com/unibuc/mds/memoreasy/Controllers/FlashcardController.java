@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FlashcardsController implements Initializable {
+public class FlashcardController implements Initializable {
 
     @FXML
     private StackPane card;

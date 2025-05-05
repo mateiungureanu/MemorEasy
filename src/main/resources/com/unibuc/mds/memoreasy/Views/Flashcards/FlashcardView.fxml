@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 <!--<AnchorPane prefHeight="404.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.flashcard.FlashcardController">-->
-<StackPane fx:id="card" layoutX="150.0" layoutY="100.0" onMouseClicked="#flipCard" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.FlashcardsController">
+<StackPane fx:id="card" layoutX="150.0" layoutY="100.0" onMouseClicked="#flipCard" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.FlashcardController">
     <children>
         <Label fx:id="front" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: lightblue; -fx-font-size: 24px; -fx-alignment: center;" text="Question" />
         <Label fx:id="back" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: lightgreen; -fx-font-size: 24px; -fx-alignment: center;" text="Answer" visible="false" />
