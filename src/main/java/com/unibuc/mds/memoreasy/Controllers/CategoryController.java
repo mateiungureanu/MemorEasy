@@ -1,5 +1,4 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import com.unibuc.mds.memoreasy.Models.Chapter;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import javafx.event.ActionEvent;
@@ -16,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -27,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static javafx.fxml.FXMLLoader.load;
-
 public class CategoryController implements Initializable {
     @FXML
     private Label labelCategory;
@@ -38,14 +34,18 @@ public class CategoryController implements Initializable {
 
     @FXML
     private Button buttonNew;
-
     @FXML
     private Button buttonDelete;
+
+    @FXML
+    private Button buttonEdit;
+
+    @FXML
+    private Label atentionare;
 
     private int category_id;
     private String category_name;
     List<Chapter> chapters;
-
 
     private void loadChapters() {
         String q = "SELECT * FROM CHAPTER WHERE id_category=" + category_id;
@@ -65,7 +65,6 @@ public class CategoryController implements Initializable {
             // Setează paginarea după ce ai încărcat capitolele
             int pageCount = Math.max(chapters.size(), 1);
             pagination.setPageCount(pageCount);
-            pagination.setPageCount(pageCount);
             pagination.setPageFactory(this::createPage);
 
         } catch (SQLException e) {
@@ -74,10 +73,8 @@ public class CategoryController implements Initializable {
     }
 
 
-
-
     public void setCategory_id(int id){
-        this.category_id = id;
+        category_id = id;
         loadChapters();
     }
 
@@ -87,8 +84,7 @@ public class CategoryController implements Initializable {
         category_name=string;
     }
 
-
-
+    //La accesarea unui capitol, dau mai departe, numele si id-ul sau.
     private Node createPage(int index) {
         if (chapters == null || chapters.isEmpty() || index >= chapters.size()) {
             Label emptyLabel = new Label("No chapters available.");
@@ -101,11 +97,11 @@ public class CategoryController implements Initializable {
 
         myButton.setOnAction(event -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/ChapterView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/ChapterView.fxml"));
                 Parent root = loader.load();
                 ChapterController controller = loader.getController();
                 controller.setChapterName(chapters.get(index).getName());
-                controller.setChapterId(chapters.get(index).getChapterId());
+                controller.setChapter_Id(chapters.get(index).getChapterId());
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -125,10 +121,10 @@ public class CategoryController implements Initializable {
 
     }
 
-
+    //La crearea unui capitol, dau mai departe, numele si id-ul categoriei sale.
     public void createChapter(ActionEvent event) throws IOException {
         if (event.getSource() == buttonNew) {
-            FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/CreateChapterView.fxml"));
+            FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/CreateChapterView.fxml"));
             Parent root=loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -141,10 +137,11 @@ public class CategoryController implements Initializable {
         }
     }
 
+    //La stergerea unui capitol, dau mai departe, numele si id-ul categoriei sale, dar si id-ul lui.
     public void deleteChapter(ActionEvent event) throws IOException {
         if (event.getSource() == buttonDelete) {
             if(!chapters.isEmpty()) {
-                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/DeleteChapterView.fxml"));
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/DeleteChapterView.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -153,13 +150,35 @@ public class CategoryController implements Initializable {
                 controller.setCategoryId(category_id);
                 controller.setCategoryName(category_name);
                 stage.setScene(scene);
-                DeleteChapterController.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getChapterId());
+                controller.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getChapterId());
                 stage.show();
             }
             else{
-                System.out.println("You have not created any chapters yet!");
+                atentionare.setText("No chapters available!");
+                atentionare.setStyle("-fx-text-fill: red;");
             }
         }
     }
 
+    public void editChapter(ActionEvent event) throws IOException {
+        if (event.getSource() == buttonEdit) {
+            if(!chapters.isEmpty()) {
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/EditChapterView.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                EditChapterController controller=loader.getController();
+                controller.setCategoryId(category_id);
+                controller.setCategoryName(category_name);
+                stage.setScene(scene);
+                controller.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getChapterId());
+                stage.show();
+            }
+            else{
+                atentionare.setText("No chapters available!");
+                atentionare.setStyle("-fx-text-fill: orange;");
+            }
+        }
+    }
 }

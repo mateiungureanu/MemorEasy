@@ -27,12 +27,18 @@
                                             <Font size="30.0" />
                                         </font>
                                     </Label>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="0.0">
                                         <children>
                                             <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createCategory" styleClass="btn-success" text="NEW" />
+                                            <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#editCategory" styleClass="btn-warning" text="EDIT" />
                                             <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteCategory" styleClass="btn-danger" text="DELETE" />
                                         </children>
                                     </HBox>
+                           <Label prefHeight="18.0" prefWidth="566.0" text="All categories are shown below — just click on one to select it!">
+                              <font>
+                                 <Font size="16.0" />
+                              </font>
+                           </Label>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by">
                                         <VBox.margin>
                                             <Insets bottom="-20.0" />

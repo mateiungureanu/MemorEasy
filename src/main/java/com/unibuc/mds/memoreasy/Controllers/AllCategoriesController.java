@@ -13,16 +13,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import static javafx.fxml.FXMLLoader.load;
 
 public class AllCategoriesController implements Initializable {
@@ -35,38 +34,41 @@ public class AllCategoriesController implements Initializable {
     private Button buttonNew;
     @FXML
     private Button buttonDelete;
+    @FXML
+    private Button buttonEdit;
 
     @FXML
     private Label atentionare;
 
     private Node createPage(int index) {
-        Button myButton = new Button(categories.get(index).getName());
-        AnchorPane myPane = new AnchorPane();
-        myPane.getChildren().add(myButton);
-        myButton.setOnAction(event -> {
-            if(!categories.isEmpty()){
-            Parent root;
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/CategoryView.fxml"));
-                root = loader.load();
-                CategoryController controller = loader.getController();
-                controller.addCategoryName(categories.get(index).getName());
-                controller.setCategory_id(categories.get(index).getId_category());
+        if (categories == null ||  categories.isEmpty() || index >= categories.size()) {
+            Label emptyLabel = new Label("No categories available.");
+            return new StackPane(emptyLabel);
+        }
+        else {
+            Button myButton = new Button(categories.get(index).getName());
+            AnchorPane myPane = new AnchorPane();
+            myPane.getChildren().add(myButton);
+            myButton.setOnAction(event -> {
+                    Parent root;
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/CategoryView.fxml"));
+                        root = loader.load();
+                        CategoryController controller = loader.getController();
+                        controller.addCategoryName(categories.get(index).getName());
+                        controller.setCategory_id(categories.get(index).getId_category());
 
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            stage.setScene(scene);
-            stage.show();
-            }
-            else{
-                atentionare.setText("You have not created any categories!");
-            }
-        });
-        return myPane;
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                    stage.setScene(scene);
+                    stage.show();
+            });
+            return myPane;
+        }
     }
 
 
@@ -84,7 +86,8 @@ public class AllCategoriesController implements Initializable {
             while (rs.next()) {
                 categories.add(new Category(rs.getInt(1),rs.getInt(2), rs.getString(3)));
             }
-            pagination.setPageCount(categories.size());
+            int pageCount = Math.max(categories.size(), 1);
+            pagination.setPageCount(pageCount);
             pagination.setPageFactory(this::createPage);
             con.close();
         } catch (SQLException e) {
@@ -106,16 +109,39 @@ public class AllCategoriesController implements Initializable {
     public void deleteCategory(ActionEvent event) throws IOException {
         if (event.getSource() == buttonDelete) {
             if(!categories.isEmpty()) {
-                Parent root = load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/DeleteCategoryView.fxml"));
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/DeleteCategoryView.fxml"));
+                Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                DeleteCategoryController controller=loader.getController();
                 stage.setScene(scene);
-                DeleteCategoryController.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
+                controller.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
                 stage.show();
             }
             else{
                 atentionare.setText("You have not created any categories!");
+                atentionare.setStyle("-fx-text-fill: red;");
+            }
+        }
+    }
+
+    public void editCategory(ActionEvent event) throws IOException {
+        if (event.getSource() == buttonEdit) {
+            if(!categories.isEmpty()) {
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/EditCategoryView.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                EditCategoryController controller=loader.getController();
+                stage.setScene(scene);
+                controller.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
+                stage.show();
+            }
+            else{
+                atentionare.setText("You have not created any categories!");
+                atentionare.setStyle("-fx-text-fill: orange;");
             }
         }
     }

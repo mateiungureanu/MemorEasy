@@ -27,13 +27,14 @@
                                             <Font size="30.0" />
                                         </font>
                                     </Label>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="0.0">
                                         <children>
                                             <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createChapter" styleClass="btn-success" text="NEW" />
-                                 <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteChapter" styleClass="btn-danger" text="DELETE" />
+                                            <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#editChapter" styleClass="btn-warning" text="EDIT" />
+                                            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteChapter" styleClass="btn-danger" text="DELETE" />
                                         </children>
                                     </HBox>
-                           <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Chapters">
+                           <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Chapters          ">
                               <font>
                                  <Font size="23.0" />
                               </font>
@@ -48,6 +49,7 @@
                                     </Text>
                                     <ChoiceBox prefWidth="150.0" />
                                     <Pagination fx:id="pagination" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0" prefWidth="561.0" VBox.vgrow="ALWAYS" />
+                           <Label fx:id="atentionare" />
                                 </children>
                             </VBox>
                         </content>

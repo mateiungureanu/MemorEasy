@@ -25,7 +25,7 @@ public class CreateChapterController {
     private int id_category;
     private String category_name;
 
-    // Setter pentru category_id
+    // Setter-i pentru category
     public void setCategoryId(int category_id) {
         this.id_category = category_id;
     }
@@ -33,8 +33,12 @@ public class CreateChapterController {
         this.category_name = category_name;
     }
 
+    //Ma intorc la categoria corespunzatoare pe care am primit-o prin acea pereche (nume, id).
     public void create(ActionEvent event) throws SQLException, IOException {
         String name = textField.getText();
+        if(name.isEmpty()){
+            name = "New Chapter without name";
+        }
         Connection con = DatabaseUtils.getConnection();
         String sql = "INSERT INTO CHAPTER( id_category, name,last_accessed) VALUES (?, ?, CURRENT_TIMESTAMP)";
         PreparedStatement pstmt = con.prepareStatement(sql);

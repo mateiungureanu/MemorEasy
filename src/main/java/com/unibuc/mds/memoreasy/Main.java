@@ -1,5 +1,4 @@
 package com.unibuc.mds.memoreasy;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

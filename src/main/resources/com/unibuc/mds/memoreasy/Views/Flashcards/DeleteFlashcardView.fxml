@@ -13,8 +13,8 @@
 
     <Label text="Are you sure you want to delete this flashcard?" wrapText="true" />
     <HBox spacing="10">
-        <Button fx:id="deleteButton" onAction="#handleDeleteFlashcard" text="Delete" />
-        <Button onAction="#handleDeleteFlashcard" text="Cancel" />
+        <Button fx:id="deleteButton" onAction="#handleDeleteFlashcard" text="Delete" styleClass="btn-danger" />
+        <Button onAction="#handleDeleteFlashcard" text="Cancel" styleClass="btn-warning"  />
     </HBox>
     <Label fx:id="errorLabel" textFill="red" />
 </VBox>

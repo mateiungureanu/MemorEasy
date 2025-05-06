@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.ChapterController">
     <HBox layoutX="-1.0" layoutY="-1.0" prefHeight="361.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -32,18 +31,9 @@
                                             <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteFlashcard" styleClass="btn-danger" text="DELETE" />
                                         </children>
                                     </HBox>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PRACTICE MODES">
-                                        <font>
-                                            <Font size="20.0" />
-                                        </font>
-                                    </Text>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
-                                        <children>
-                                            <Button mnemonicParsing="false" styleClass="btn-group-horizontal" text="REVIEW" />
-                                            <Button mnemonicParsing="false" styleClass="btn-group-horizontal" text="WRITING" />
-                                        </children>
-                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" />
                                     <Pagination fx:id="pagination" pageCount="14" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                           <Label fx:id="atentionare" />
                                 </children>
                             </VBox>
                         </content>

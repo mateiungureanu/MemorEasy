@@ -1,8 +1,6 @@
 package com.unibuc.mds.memoreasy.Controllers;
 
-import com.unibuc.mds.memoreasy.Models.Chapter;
 import com.unibuc.mds.memoreasy.Models.Flashcard;
-
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,21 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import static javafx.fxml.FXMLLoader.load;
 
 public class ChapterController {
-
     @FXML
     private Button buttonNew;
     @FXML
@@ -40,16 +32,19 @@ public class ChapterController {
     @FXML
     private Label labelChapter;
 
-    private int chapterId;
+    private int chapter_id;
     private String chapter_name;
 
     @FXML
     private Pagination pagination;
 
+    @FXML
+    private Label atentionare;
+
     List<Flashcard> flashcards;
 
     private void loadFlashcards() {
-        String q = "SELECT * FROM FLASHCARD WHERE id_chapter=" + chapterId;
+        String q = "SELECT * FROM FLASHCARD WHERE id_chapter=" + chapter_id;
         try {
             Connection con = DatabaseUtils.getConnection();
             Statement st = con.createStatement();
@@ -58,12 +53,12 @@ public class ChapterController {
             flashcards = new ArrayList<>();
 
             while (rs.next()) {
-                // Adaugă fiecare flashcard în listă
+                // Adauga fiecare flashcard în lista
                 flashcards.add(new Flashcard(rs.getInt(1), rs.getString(3), rs.getString(5)));
             }
             con.close();
 
-            int pageCount = Math.max(flashcards.size(), 1);
+            int pageCount = Math.max(flashcards.size(),1);
             pagination.setPageCount(pageCount);
             pagination.setPageCount(pageCount);
             pagination.setPageFactory(this::createPage);
@@ -74,24 +69,21 @@ public class ChapterController {
     }
 
     public void setChapterName(String string){
+        chapter_name = string;
         labelChapter.setText(labelChapter.getText()+" "+string);
     }
 
-    public void setChapterId(int id_chapter) {
-        this.chapterId = id_chapter;
+    public void setChapter_Id(int id) {
+        chapter_id = id;
         loadFlashcards();
     }
 
-    @FXML
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        pagination.setPageCount(flashcards.size());
-        //setPageFactory(Callback<Integer,Node>(){@Override public Node call(Integer){...}})
-        //eu dau ca parametru o referinta catre o functie care creeaza elemente de tip Node
-        //se va apela functia create page in functie de setPageCount
-//        pagination.setPageFactory(this::createPage);
-    }
-
     private Node createPage(int index) {
+        if (flashcards == null || flashcards.isEmpty() || index >= flashcards.size()) {
+            Label emptyLabel = new Label("No flashcards available.");
+            return new StackPane(emptyLabel);
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/FlashcardView.fxml"));
             StackPane root = loader.load();
@@ -112,6 +104,7 @@ public class ChapterController {
         }
     }
 
+    //La crearea unui falshcard, dau mai departe, numele si id-ul capitolului sau.
     public void createFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == buttonNew) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/CreateFlashcardView.fxml"));
@@ -120,13 +113,14 @@ public class ChapterController {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             CreateFlashcardController controller = loader.getController();
-            controller.setChapterId(chapterId);
+            controller.setChapterId(chapter_id);
             controller.setChapterName(chapter_name);
             stage.setScene(scene);
             stage.show();
         }
     }
 
+    //La stergerea unui falshcard, dau mai departe, numele si id-ul capitolului sau, dar si id-ul sau.
     public void deleteFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == buttonDelete) {
             if (!flashcards.isEmpty()) {
@@ -136,18 +130,19 @@ public class ChapterController {
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
                 DeleteFlashcardController controller = loader.getController();
-                controller.setChapterId(chapterId);
+                controller.setChapterId(chapter_id);
                 controller.setChapterName(chapter_name);
                 stage.setScene(scene);
-                controller.setFlashcard(flashcards.get(pagination.getCurrentPageIndex()));
                 controller.setIdFlashcard(flashcards.get(pagination.getCurrentPageIndex()).getId_flashcard());
                 stage.show();
             } else {
-                System.out.println("You have not created any flashcards yet!");
+                atentionare.setText("No flashcards available!");
+                atentionare.setStyle("-fx-text-fill: red;");
             }
         }
     }
 
+    //La editarea unui falshcard, dau mai departe, numele si id-ul capitolului sau, datr si id-ul sau.
     public void editFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == buttonEdit) {
             if (!flashcards.isEmpty()) {
@@ -157,12 +152,14 @@ public class ChapterController {
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
                 EditFlashcardController controller = loader.getController();
-                Flashcard currentFlashcard = flashcards.get(pagination.getCurrentPageIndex());
-                controller.setFlashcard(currentFlashcard);
+                controller.setChapterId(chapter_id);
+                controller.setChapterName(chapter_name);
                 stage.setScene(scene);
+                controller.setIdFlashcard(flashcards.get(pagination.getCurrentPageIndex()).getId_flashcard());
                 stage.show();
             } else {
-                System.out.println("You have not created any flashcards yet!");
+                atentionare.setText("No flashcards available!");
+                atentionare.setStyle("-fx-text-fill: orange;");
             }
         }
     }

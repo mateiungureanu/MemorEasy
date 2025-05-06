@@ -1,5 +1,4 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,13 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import static javafx.fxml.FXMLLoader.load;
 
 public class CreateFlashcardController {
 
@@ -33,23 +29,26 @@ public class CreateFlashcardController {
     private int id_chapter;
     private String chapter_name;
 
-    public void setChapterId(int id_chapter) {
-        this.id_chapter = id_chapter;
+    public void setChapterId(int chapter_id) {
+        this.id_chapter = chapter_id;
     }
     public void setChapterName(String chapter_name) {
         this.chapter_name = chapter_name;
     }
 
-
-    @FXML
+    //Ma intorc la chapter-ul corespunzator pe care l-am primit prin acea pereche (nume, id).
     public void handleCreateFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == saveButton) {
                 String question = questionField.getText();
                 String answer = answerField.getText();
 
-//                if (question.isEmpty() || answer.isEmpty()) {
-//                    return;
-//                }
+                if (question.isEmpty()) {
+                question = "New empty question";
+                }
+
+                if (answer.isEmpty()) {
+                answer = "New empty answer";
+                }
 
                 try (Connection connection = DatabaseUtils.getConnection()) {
                     String query = "INSERT INTO flashcard (question, answer, id_chapter) VALUES (?, ?, ?)";
@@ -62,11 +61,11 @@ public class CreateFlashcardController {
                     e.printStackTrace();
                 }
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/ChapterView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/ChapterView.fxml"));
                 Parent root = loader.load();
-//                ChapterController controller = loader.getController();
-//                controller.setChapterName(chapter_name);
-//                controller.setChapterId(id_chapter);
+                ChapterController controller = loader.getController();
+                controller.setChapterName(chapter_name);
+                controller.setChapter_Id(id_chapter);
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());

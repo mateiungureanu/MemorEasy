@@ -1,27 +1,23 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static javafx.fxml.FXMLLoader.load;
-
 public class DeleteChapterController {
-    static int idChapter=0;
-
+    private int idChapter;
     private int id_category;
     private String category_name;
-
 
     public void setCategoryId(int category_id) {
         this.id_category = category_id;
@@ -30,15 +26,20 @@ public class DeleteChapterController {
         this.category_name = category_name;
     }
 
+    @FXML
+    private Button buttonDelete;
 
+    //Ma intorc la categoria corespunzatoare pe care am primit-o prin acea pereche (nume, id).
     public void delete(ActionEvent event) throws SQLException, IOException {
-        String sql1 = "delete from flashcard where id_chapter= "+ idChapter;
-        String sql2 = "delete from chapter where id_chapter = "+ idChapter;
-        Connection con = DatabaseUtils.getConnection();
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate(sql1);
-        stmt.executeUpdate(sql2);
-        con.close();
+        if (event.getSource() == buttonDelete) {
+            String sql1 = "delete from flashcard where id_chapter= " + idChapter;
+            String sql2 = "delete from chapter where id_chapter = " + idChapter;
+            Connection con = DatabaseUtils.getConnection();
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate(sql1);
+            stmt.executeUpdate(sql2);
+            con.close();
+        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/CategoryView.fxml"));
         Parent root = loader.load();
@@ -52,7 +53,7 @@ public class DeleteChapterController {
         stage.show();
     }
 
-    static public void setIdChapter(int id_chapter) {
+    public void setIdChapter(int id_chapter) {
         idChapter = id_chapter;
     }
 }

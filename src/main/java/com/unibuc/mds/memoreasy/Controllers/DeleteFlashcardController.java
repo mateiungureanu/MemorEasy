@@ -1,6 +1,4 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
-import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,34 +7,25 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import static javafx.fxml.FXMLLoader.load;
+import java.sql.Statement;
 
 public class DeleteFlashcardController {
-    static int idFlashcard=0;
+    private int idFlashcard;
 
-    @FXML
-    private Label confirmationLabel;
-
-    private Flashcard flashcard;
-
-    public void setFlashcard(Flashcard flashcard) {
-        this.flashcard = flashcard;
+    public void setIdFlashcard(int idFlashcard) {
+        this.idFlashcard = idFlashcard;
     }
 
     private int id_chapter;
     private String chapter_name;
 
-    public void setChapterId(int id_chapter) {
-        this.id_chapter = id_chapter;
+    public void setChapterId(int chapter_id) {
+        this.id_chapter = chapter_id;
     }
 
     public void setChapterName(String chapter_name) {
@@ -46,28 +35,22 @@ public class DeleteFlashcardController {
     @FXML
     private Button deleteButton;
 
-    @FXML
+    //Ma intorc la chapter-ul corespunzator pe care l-am primit prin acea pereche (nume, id).
     public void handleDeleteFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == deleteButton) {
-
-//            if (question.isEmpty() || answer.isEmpty()) {
-//                return;
-//            }
-
             try (Connection connection = DatabaseUtils.getConnection()) {
-                String query = "DELETE FROM flashcard WHERE id_flashcard = ?";
-                PreparedStatement stmt = connection.prepareStatement(query);
-                stmt.setInt(1, flashcard.getId_flashcard());
-                stmt.executeUpdate();
+                String query = "DELETE FROM flashcard WHERE id_flashcard = "+idFlashcard;
+                Statement stmt = connection.createStatement();
+                stmt.executeUpdate(query);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/FlashcardSets/ChapterView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/ChapterView.fxml"));
         Parent root = loader.load();
-//        ChapterController controller = loader.getController();
-//        controller.setChapterName(chapter_name);
-//        controller.setChapterId(id_chapter);
+        ChapterController controller = loader.getController();
+        controller.setChapterName(chapter_name);
+        controller.setChapter_Id(id_chapter);
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
@@ -75,7 +58,4 @@ public class DeleteFlashcardController {
         stage.show();
     }
 
-    public void setIdFlashcard(int id_flashcard) {
-        idFlashcard = id_flashcard;
-    }
 }
