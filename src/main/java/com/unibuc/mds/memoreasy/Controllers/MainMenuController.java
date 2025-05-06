@@ -56,7 +56,7 @@ public class MainMenuController implements Initializable {
     private Button toggleThemeButton;
 
     @FXML
-    private void toggleDarkMode(Event event) throws Exception {
+    private void toggleDarkMode(){
         boolean newMode = !ThemeManager.isDarkMode();
         ThemeManager.setDarkMode(newMode);
 

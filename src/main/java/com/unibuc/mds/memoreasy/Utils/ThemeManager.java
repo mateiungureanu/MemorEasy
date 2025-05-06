@@ -16,19 +16,8 @@ public class ThemeManager {
     }
 
     public static void applyTheme(Scene scene) {
-//        scene.getStylesheets().clear();
-//        String stylesheet = darkMode ? "/com/unibuc/mds/memoreasy/Styles/dark-theme.css" : "/com/unibuc/mds/memoreasy/Styles/light-theme.css";
-//        scene.getStylesheets().addAll(BootstrapFX.bootstrapFXStylesheet(), ThemeManager.class.getResource(stylesheet).toExternalForm());
-//
-        Parent root = scene.getParent();
-        while (root.getParent() != null) {
-            root = root.getParent();
-        }
-
-        // 2. Dacă e un container, aplică efectul asupra copiilor
-        if (root instanceof Pane pane) {
-            for (Node child : pane.getChildren()) {
-                child.setStyle("-fx-background-color: darkblue;");
-            }
+        scene.getStylesheets().clear();
+        String stylesheet = darkMode ? "/com/unibuc/mds/memoreasy/Styles/dark-theme.css" : "/com/unibuc/mds/memoreasy/Styles/light-theme.css";
+        scene.getStylesheets().addAll(BootstrapFX.bootstrapFXStylesheet(), ThemeManager.class.getResource(stylesheet).toExternalForm());
     }
 }
