@@ -2,6 +2,7 @@ package com.unibuc.mds.memoreasy.Controllers;
 
 import com.unibuc.mds.memoreasy.Models.User;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
+import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -52,6 +53,7 @@ public class LoginController {
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
                 
                 Stage stage = (Stage) loginUsername.getScene().getWindow();
+                ThemeManager.applyTheme(scene);///Pentru tema de luminozitate
                 stage.setScene(scene);
 
                 stage.show();

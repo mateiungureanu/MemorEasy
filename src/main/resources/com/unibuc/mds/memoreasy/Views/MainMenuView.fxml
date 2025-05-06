@@ -83,5 +83,13 @@
                     <Insets left="5.0" right="5.0" />
                 </VBox.margin>
             </Button>
+            <Button fx:id="toggleThemeButton" text="Toggle Theme" onAction="#toggleDarkMode">
+                <font>
+                    <Font size="17.0" />
+                </font>
+                <VBox.margin>
+                    <Insets left="5.0" right="5.0" />
+                </VBox.margin>
+            </Button>
         </children>
     </VBox>

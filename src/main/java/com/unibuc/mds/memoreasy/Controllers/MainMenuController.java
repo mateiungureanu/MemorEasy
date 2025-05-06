@@ -1,5 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
+import com.unibuc.mds.memoreasy.Utils.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -47,5 +47,22 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FontIcon icon = new FontIcon("fas-home");
         homeButton.setGraphic(icon);
+    }
+
+
+
+    /// Thema
+    @FXML
+    private Button toggleThemeButton;
+
+    @FXML
+    private void toggleDarkMode(Event event) throws Exception {
+        boolean newMode = !ThemeManager.isDarkMode();
+        ThemeManager.setDarkMode(newMode);
+
+        Scene scene = toggleThemeButton.getScene();
+        if (scene != null) {
+            ThemeManager.applyTheme(scene);
+        }
     }
 }
