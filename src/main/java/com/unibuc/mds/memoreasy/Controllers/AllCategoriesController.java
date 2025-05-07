@@ -152,8 +152,8 @@ public class AllCategoriesController implements Initializable {
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
                 EditCategoryController controller=loader.getController();
-                stage.setScene(scene);
                 controller.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
+                stage.setScene(scene);
                 stage.show();
             }
             else{

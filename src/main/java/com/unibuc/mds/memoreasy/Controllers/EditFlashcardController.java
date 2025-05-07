@@ -14,25 +14,14 @@ import org.kordamp.bootstrapfx.BootstrapFX;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EditFlashcardController {
     private int idFlashcard;
 
-    public void setIdFlashcard(int idFlashcard) {
-        this.idFlashcard = idFlashcard;
-    }
-
     private int id_chapter;
     private String chapter_name;
-
-    public void setChapterId(int chapter_id) {
-        this.id_chapter = chapter_id;
-    }
-
-    public void setChapterName(String chapter_name) {
-        this.chapter_name = chapter_name;
-    }
 
     @FXML
     private TextField questionField;
@@ -42,6 +31,47 @@ public class EditFlashcardController {
 
     @FXML
     private Button saveButton;
+
+    public void setChapterId(int chapter_id) {
+        this.id_chapter = chapter_id;
+    }
+
+    public void setChapterName(String chapter_name) {
+        this.chapter_name = chapter_name;
+    }
+
+
+    public void loadFlashCardInfo(){
+        String sql2= "select question, answer from flashcard where id_flashcard = ?";
+        try {
+            Connection con=DatabaseUtils.getConnection();
+            PreparedStatement stmt2=con.prepareStatement(sql2);
+            stmt2.setInt(1,idFlashcard);
+            ResultSet rs2=stmt2.executeQuery();
+
+            if (rs2.next()) {
+                questionField.setText(rs2.getString(1));
+                answerField.setText(rs2.getString(2));
+            } else {
+                System.out.println("No category found for id_category = " + idFlashcard);
+            }
+
+            rs2.close();
+            stmt2.close();
+            con.close();
+//            newCategoryName.setText(rs2.getString(1));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public void setIdFlashcard(int idFlashcard) {
+        this.idFlashcard = idFlashcard;
+        loadFlashCardInfo();
+    }
+
 
     //Ma intorc la chapter-ul corespunzator pe care l-am primit prin acea pereche (nume, id).
     public void handleEditFlashcard(ActionEvent event) throws IOException {

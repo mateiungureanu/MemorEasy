@@ -15,6 +15,7 @@ import org.kordamp.bootstrapfx.BootstrapFX;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EditChapterController {
@@ -63,8 +64,33 @@ public class EditChapterController {
             stage.show();
         }
     }
+    public void loadChapterName(){
+        String sql2= "select name from chapter where id_chapter = ?";
+        try {
+            Connection con=DatabaseUtils.getConnection();
+            PreparedStatement stmt2=con.prepareStatement(sql2);
+            stmt2.setInt(1,idChapter);
+            ResultSet rs2=stmt2.executeQuery();
+
+            if (rs2.next()) {
+                newChapterName.setText(rs2.getString(1)); // sau rs2.getString(1)
+            } else {
+                System.out.println("No category found for id_category = " + idChapter);
+            }
+
+            rs2.close();
+            stmt2.close();
+            con.close();
+//            newCategoryName.setText(rs2.getString(1));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
 
     public void setIdChapter(int id_chapter) {
         idChapter = id_chapter;
+        loadChapterName();
     }
 }

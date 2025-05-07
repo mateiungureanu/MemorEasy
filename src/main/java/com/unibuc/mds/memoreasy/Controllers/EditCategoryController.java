@@ -3,6 +3,7 @@ import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,12 +12,16 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+
 import static javafx.fxml.FXMLLoader.load;
 
-public class EditCategoryController {
+public class EditCategoryController implements Initializable {
     private int idCategory;
     @FXML
     private Button saveButton;
@@ -47,8 +52,41 @@ public class EditCategoryController {
         }
     }
 
+
+
+
+    public void loadCategoryName(){
+        String sql2= "select name from category where id_category = ?";
+        try {
+            Connection con=DatabaseUtils.getConnection();
+            PreparedStatement stmt2=con.prepareStatement(sql2);
+            stmt2.setInt(1,idCategory);
+            ResultSet rs2=stmt2.executeQuery();
+
+            if (rs2.next()) {
+                newCategoryName.setText(rs2.getString(1)); // sau rs2.getString(1)
+            } else {
+                System.out.println("No category found for id_category = " + idCategory);
+            }
+
+            rs2.close();
+            stmt2.close();
+            con.close();
+//            newCategoryName.setText(rs2.getString(1));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setIdCategory(int id_category) {
         idCategory = id_category;
+        loadCategoryName();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }
 
