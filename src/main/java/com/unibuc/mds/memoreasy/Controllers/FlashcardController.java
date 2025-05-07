@@ -6,7 +6,10 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -19,21 +22,30 @@ public class FlashcardController implements Initializable {
     private StackPane card;
 
     @FXML
-    private Label front;
+    private VBox front;
 
     @FXML
-    private Label back;
+    private VBox back;
+
+    @FXML
+    private TextArea frontTextArea;
+
+    @FXML
+    private TextArea backTextArea;
+
+    @FXML
+    private ImageView frontImageView;
+
+    @FXML
+    private ImageView backImageView;
 
     private boolean showingFront = true;
 
-    public Label getFront() {
-        return front;
-    }
 
-    public Label getBack() {
-        return back;
-    }
-
+    public TextArea getFrontTextArea() { return frontTextArea; }
+    public TextArea getBackTextArea() { return backTextArea; }
+    public ImageView getFrontImageView() { return frontImageView; }
+    public ImageView getBackImageView() { return backImageView; }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,8 +55,6 @@ public class FlashcardController implements Initializable {
 
     @FXML
     private void flipCard() {
-        //am rotateProperty care retine pozitia exacta a cardului dupa fiecare rotatie
-        //nu este ca in CSS
         double startAngle = showingFront ? 0 : 180;
         double endAngle = showingFront ? 180 : 0;
 

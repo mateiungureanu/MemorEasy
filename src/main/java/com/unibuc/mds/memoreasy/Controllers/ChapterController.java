@@ -12,9 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -55,7 +58,7 @@ public class ChapterController {
 
             while (rs.next()) {
                 // Adauga fiecare flashcard în lista
-                flashcards.add(new Flashcard(rs.getInt(1), rs.getString(3), rs.getString(5)));
+                flashcards.add(new Flashcard(rs.getInt(1), rs.getString(3), rs.getString(5), rs.getBytes(4), rs.getBytes(6)));
             }
             con.close();
 
@@ -79,31 +82,49 @@ public class ChapterController {
         loadFlashcards();
     }
 
+
     private Node createPage(int index) {
-        if (flashcards == null || flashcards.isEmpty() || index >= flashcards.size()) {
-            Label emptyLabel = new Label("No flashcards available.");
-            return new StackPane(emptyLabel);
-        }
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/FlashcardView.fxml"));
-            StackPane root = loader.load();
-
-            FlashcardController controller = loader.getController();
-            Flashcard flashcard = flashcards.get(index);
-
-            Label frontLabel = controller.getFront();
-            Label backLabel = controller.getBack();
-
-            frontLabel.setText(flashcard.getQuestion());
-            backLabel.setText(flashcard.getAnswer());
-
-            return root;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new StackPane(new Label("Could not load flashcard"));
-        }
+    if (flashcards == null || flashcards.isEmpty() || index >= flashcards.size()) {
+        Label emptyLabel = new Label("No flashcards available.");
+        return new StackPane(emptyLabel);
     }
+
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/FlashcardView.fxml"));
+        StackPane root = loader.load();
+
+        FlashcardController controller = loader.getController();
+        Flashcard flashcard = flashcards.get(index);
+
+        // Set text for question and answer
+        controller.getFrontTextArea().setText(flashcard.getQuestion());
+        controller.getBackTextArea().setText(flashcard.getAnswer());
+
+        // Set images (if available)
+        if (flashcard.getImage_q() != null) {
+            Image frontImage = new Image(new ByteArrayInputStream(flashcard.getImage_q()));
+            controller.getFrontImageView().setImage(frontImage);
+        }
+        else{
+            controller.getFrontImageView().setVisible(false);
+        }
+
+        if (flashcard.getImage_a() != null) {
+            Image backImage = new Image(new ByteArrayInputStream(flashcard.getImage_a()));
+            controller.getBackImageView().setImage(backImage);
+        }
+        else{
+            controller.getBackImageView().setVisible(false);
+        }
+
+        return root;
+    } catch (IOException e) {
+        e.printStackTrace();
+        return new StackPane(new Label("Could not load flashcard"));
+    }
+}
+
+
 
     //La crearea unui falshcard, dau mai departe, numele si id-ul capitolului sau.
     public void createFlashcard(ActionEvent event) throws IOException {

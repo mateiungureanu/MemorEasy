@@ -9,9 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -27,8 +34,22 @@ public class CreateFlashcardController {
     @FXML
     private Button saveButton;
 
+    @FXML
+    private Button load_img_q_button;
+
+    @FXML
+    private Button load_img_a_button;
+
+    @FXML
+    private ImageView image_q_view;
+
+    @FXML
+    private ImageView image_a_view;
+
     private int id_chapter;
     private String chapter_name;
+    private byte[] questionImageData;
+    private byte[] answerImageData;
 
     public void setChapterId(int chapter_id) {
         this.id_chapter = chapter_id;
@@ -51,12 +72,26 @@ public class CreateFlashcardController {
                 answer = "New empty answer";
                 }
 
+
+
                 try (Connection connection = DatabaseUtils.getConnection()) {
-                    String query = "INSERT INTO flashcard (question, answer, id_chapter) VALUES (?, ?, ?)";
+                    String query = "INSERT INTO flashcard (question, answer, id_chapter, image_q, image_a) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement stmt = connection.prepareStatement(query);
                     stmt.setString(1, question);
                     stmt.setString(2, answer);
                     stmt.setInt(3, id_chapter);
+
+                if (questionImageData != null) {
+                        stmt.setBytes(4, questionImageData);
+                    } else {
+                        stmt.setNull(4, java.sql.Types.BLOB);
+                    }
+
+                    if (answerImageData != null) {
+                        stmt.setBytes(5, answerImageData);
+                    } else {
+                        stmt.setNull(5, java.sql.Types.BLOB);
+                    }
                     stmt.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -78,4 +113,56 @@ public class CreateFlashcardController {
                 stage.show();
         }
     }
+
+    public byte[] imageToByteArray(File file) throws IOException {
+        return Files.readAllBytes(file.toPath());
+    }
+
+    @FXML
+    private void handleLoadQuestionImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Încarcă imagine pentru întrebare");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Imagini", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(load_img_q_button.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+
+                questionImageData = Files.readAllBytes(selectedFile.toPath());
+                Image image = new Image(new ByteArrayInputStream(questionImageData));
+                image_q_view.setImage(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @FXML
+    private void handleLoadAnswerImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Încarcă imagine pentru răspuns");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Imagini", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(load_img_a_button.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+                answerImageData = Files.readAllBytes(selectedFile.toPath());
+                Image image = new Image(new ByteArrayInputStream(answerImageData));
+                image_a_view.setImage(image);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
 }
