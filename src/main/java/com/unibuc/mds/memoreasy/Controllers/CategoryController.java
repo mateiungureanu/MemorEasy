@@ -1,6 +1,7 @@
 package com.unibuc.mds.memoreasy.Controllers;
 import com.unibuc.mds.memoreasy.Models.Chapter;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
+import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -106,6 +107,10 @@ public class CategoryController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException ex) {

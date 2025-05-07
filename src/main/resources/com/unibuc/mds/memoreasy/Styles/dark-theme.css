@@ -1,8 +1,81 @@
-.root {
-    -fx-background-color: #2b2b2b;
+/*.anchor-pane,*/
+/*.scroll-pane,*/
+/*.vbox,*/
+/*.hbox,*/
+/*.stack-pane,*/
+/*.border-pane,*/
+/*.grid-pane {*/
+/*    -fx-background-color: #0e1742;*/
+
+/*}*/
+*{  -fx-background-color: #0e1742;
     -fx-text-fill: white;
 }
-/*.button {*/
-/*    -fx-background-color: #444;*/
-/*    -fx-text-fill: white;*/
+
+
+/*.chart {*/
+/*    -fx-background-color: #1e1e1e;*/
 /*}*/
+.chart-plot-background {
+    -fx-background-color: #1e1e1e;
+}
+.chart-title {
+    -fx-text-fill: white;
+}
+
+.chart-legend {
+    -fx-text-fill: white;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #0d6efd; /* Albastru Bootstrap */
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #0d6efd, white;
+}
+
+
+
+
+/*#pagination .control-buttons-box {*/
+/*    -fx-background-color: #007acc; !* sau culoare închisă *!*/
+/*}*/
+
+#pagination .number-button {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: white;
+    -fx-border-color: #444;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-background-insets: 0; /* <- adaugă asta */
+}
+
+#pagination .number-button:hover {
+    -fx-background-color: #333333;
+}
+
+#pagination .number-button:selected{
+    -fx-background-radius: 4;
+    -fx-background-insets: 0; /* <- adaugă asta */
+    -fx-background-color: #007acc; /* un accent albastru */
+    -fx-text-fill: white;
+}
+
+/* Navigație "Next" / "Previous" */
+#pagination .control-buttons {
+    -fx-background-color: #007acc !important;
+    -fx-text-fill: white;
+}
+#pagination .pagination-control .left-arrow, .right-arrow {
+    -fx-background-color: #333333;
+}
+
+#pagination .button{
+    -fx-background-color: #007acc;
+    -fx-text-fill: white;
+}

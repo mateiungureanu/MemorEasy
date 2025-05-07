@@ -53,7 +53,7 @@ public class LoginController {
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
                 
                 Stage stage = (Stage) loginUsername.getScene().getWindow();
-                ThemeManager.applyTheme(scene);///Pentru tema de luminozitate
+                //ThemeManager.applyTheme(scene);///Pentru tema de luminozitate
                 stage.setScene(scene);
 
                 stage.show();

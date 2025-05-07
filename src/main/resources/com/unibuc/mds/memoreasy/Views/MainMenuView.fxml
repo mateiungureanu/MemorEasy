@@ -10,9 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="424.0" prefWidth="156.0" spacing="12.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.MainMenuController">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="424.0" prefWidth="156.0" spacing="12.0" styleClass="vbox" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.MainMenuController">
         <children>
             <Label text="MemorEasy">
                 <graphic>
@@ -83,13 +81,19 @@
                     <Insets left="5.0" right="5.0" />
                 </VBox.margin>
             </Button>
-            <Button fx:id="toggleThemeButton" text="Toggle Theme" onAction="#toggleDarkMode">
-                <font>
-                    <Font size="17.0" />
-                </font>
-                <VBox.margin>
-                    <Insets left="5.0" right="5.0" />
-                </VBox.margin>
-            </Button>
+      <Button fx:id="toggleThemeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#toggleDarkMode" prefHeight="54.0" prefWidth="149.0" text="Mode">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
+      </Button>
         </children>
     </VBox>

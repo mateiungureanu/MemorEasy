@@ -1,11 +1,12 @@
 package com.unibuc.mds.memoreasy.Utils;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class ThemeManager {
-    private static boolean darkMode = false;
+    public static boolean darkMode = false;
 
     public static void setDarkMode(boolean enabled) {
         darkMode = enabled;
@@ -15,9 +16,14 @@ public class ThemeManager {
         return darkMode;
     }
 
-    public static void applyTheme(Scene scene) {
+    public static void applyTheme(Node anyNode) {
+        Scene scene = anyNode.getScene();
         scene.getStylesheets().clear();
-        String stylesheet = darkMode ? "/com/unibuc/mds/memoreasy/Styles/dark-theme.css" : "/com/unibuc/mds/memoreasy/Styles/light-theme.css";
-        scene.getStylesheets().addAll(BootstrapFX.bootstrapFXStylesheet(), ThemeManager.class.getResource(stylesheet).toExternalForm());
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        //String stylesheet = darkMode ? "/com/unibuc/mds/memoreasy/Styles/dark-theme.css" : "/com/unibuc/mds/memoreasy/Styles/light-theme.css";
+        if(darkMode){
+            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+        }
     }
 }
