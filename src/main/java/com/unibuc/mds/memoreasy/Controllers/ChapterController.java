@@ -2,6 +2,7 @@ package com.unibuc.mds.memoreasy.Controllers;
 
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
+import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,6 +113,10 @@ public class ChapterController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if(ThemeManager.darkMode){
+                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
             CreateFlashcardController controller = loader.getController();
             controller.setChapterId(chapter_id);
             controller.setChapterName(chapter_name);
@@ -129,6 +134,10 @@ public class ChapterController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 DeleteFlashcardController controller = loader.getController();
                 controller.setChapterId(chapter_id);
                 controller.setChapterName(chapter_name);
@@ -151,6 +160,10 @@ public class ChapterController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 EditFlashcardController controller = loader.getController();
                 controller.setChapterId(chapter_id);
                 controller.setChapterName(chapter_name);

@@ -106,6 +106,10 @@ public class AllCategoriesController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if(ThemeManager.darkMode){
+                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
             stage.setScene(scene);
             stage.show();
         }
@@ -119,6 +123,10 @@ public class AllCategoriesController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 DeleteCategoryController controller=loader.getController();
                 stage.setScene(scene);
                 controller.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
@@ -139,6 +147,10 @@ public class AllCategoriesController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 EditCategoryController controller=loader.getController();
                 stage.setScene(scene);
                 controller.setIdCategory(categories.get(pagination.getCurrentPageIndex()).getId_category());
