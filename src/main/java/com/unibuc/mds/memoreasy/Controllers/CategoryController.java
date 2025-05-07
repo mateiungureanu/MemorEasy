@@ -134,6 +134,10 @@ public class CategoryController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if(ThemeManager.darkMode){
+                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
             CreateChapterController controller=loader.getController();
             controller.setCategoryId(category_id);
             controller.setCategoryName(category_name);
@@ -151,6 +155,10 @@ public class CategoryController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 DeleteChapterController controller=loader.getController();
                 controller.setCategoryId(category_id);
                 controller.setCategoryName(category_name);
@@ -173,6 +181,10 @@ public class CategoryController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+                if(ThemeManager.darkMode){
+                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                    scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                }
                 EditChapterController controller=loader.getController();
                 controller.setCategoryId(category_id);
                 controller.setCategoryName(category_name);

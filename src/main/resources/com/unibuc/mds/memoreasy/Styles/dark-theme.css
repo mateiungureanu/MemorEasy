@@ -65,3 +65,13 @@
     -fx-background-color: #007acc;
     -fx-text-fill: white;
 }
+
+
+
+
+.text-field {
+    -fx-background-color: #007acc;
+    -fx-control-inner-background: lightyellow;
+    /*-fx-text-fill: black;*/
+}
+
