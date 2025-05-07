@@ -1,21 +1,7 @@
-/*.anchor-pane,*/
-/*.scroll-pane,*/
-/*.vbox,*/
-/*.hbox,*/
-/*.stack-pane,*/
-/*.border-pane,*/
-/*.grid-pane {*/
-/*    -fx-background-color: #0e1742;*/
 
-/*}*/
 *{  -fx-background-color: #0e1742;
     -fx-text-fill: white;
 }
-
-
-/*.chart {*/
-/*    -fx-background-color: #1e1e1e;*/
-/*}*/
 .chart-plot-background {
     -fx-background-color: #1e1e1e;
 }
@@ -32,7 +18,7 @@
 }
 
 .default-color0.chart-series-line {
-    -fx-stroke: #0d6efd; /* Albastru Bootstrap */
+    -fx-stroke: #0d6efd;
 }
 
 .default-color0.chart-line-symbol {

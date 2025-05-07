@@ -79,11 +79,6 @@ public class MainMenuController implements Initializable {
         boolean newMode = !ThemeManager.isDarkMode();
         ThemeManager.setDarkMode(newMode);
 
-        //        Scene scene = toggleThemeButton.getScene();
-//        if (scene != null) {
-//            ThemeManager.applyTheme(scene);
-//        }
-
         if(ThemeManager.darkMode)
         {
             FontIcon moon = new FontIcon("fas-moon");
