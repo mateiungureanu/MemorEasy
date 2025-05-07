@@ -18,7 +18,17 @@ public class Main extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        double width = stage.getWidth();
+        double height = stage.getHeight();
+        double x = stage.getX();
+        double y = stage.getY();
+        boolean maximized = stage.isMaximized();
         stage.setScene(scene);
+        stage.setWidth(width);
+        stage.setHeight(height);
+        stage.setX(x);
+        stage.setY(y);
+        stage.setMaximized(maximized);
         stage.setTitle("MemorEasy");
         Image icon = new Image(getClass().getResourceAsStream("/com/unibuc/mds/memoreasy/images/icon.png"));
         stage.getIcons().add(icon);
