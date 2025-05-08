@@ -7,9 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -57,6 +55,35 @@ public class CreateFlashcardController {
     }
     public void setChapterName(String chapter_name) {
         this.chapter_name = chapter_name;
+    }
+
+    @FXML
+    private void initialize() {
+        // Crearea ContextMenu-ului pentru imaginea întrebării
+        ContextMenu contextMenuQ = new ContextMenu();
+        MenuItem removeImgQ = new MenuItem("Remove Image");
+        removeImgQ.setOnAction(e -> handleRemoveQuestionImage());
+        contextMenuQ.getItems().add(removeImgQ);
+        image_q_view.setOnContextMenuRequested(e -> contextMenuQ.show(image_q_view, e.getScreenX(), e.getScreenY()));
+
+        // Crearea ContextMenu-ului pentru imaginea răspunsului
+        ContextMenu contextMenuA = new ContextMenu();
+        MenuItem removeImgA = new MenuItem("Remove Image");
+        removeImgA.setOnAction(e -> handleRemoveAnswerImage());
+        contextMenuA.getItems().add(removeImgA);
+        image_a_view.setOnContextMenuRequested(e -> contextMenuA.show(image_a_view, e.getScreenX(), e.getScreenY()));
+    }
+
+    @FXML
+    private void handleRemoveQuestionImage() {
+        questionImageData=null;
+        image_q_view.setImage(null);
+    }
+
+    @FXML
+    private void handleRemoveAnswerImage() {
+        answerImageData=null;
+        image_a_view.setImage(null);
     }
 
     //Ma intorc la chapter-ul corespunzator pe care l-am primit prin acea pereche (nume, id).
@@ -113,10 +140,6 @@ public class CreateFlashcardController {
                 stage.setScene(scene);
                 stage.show();
         }
-    }
-
-    public byte[] imageToByteArray(File file) throws IOException {
-        return Files.readAllBytes(file.toPath());
     }
 
     @FXML
