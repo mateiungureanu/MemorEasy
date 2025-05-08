@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,10 +27,10 @@ import java.sql.SQLException;
 public class CreateFlashcardController {
 
     @FXML
-    private TextField questionField;
+    private TextArea questionTextArea;
 
     @FXML
-    private TextField answerField;
+    private TextArea answerTextArea;
 
     @FXML
     private Button saveButton;
@@ -61,8 +62,8 @@ public class CreateFlashcardController {
     //Ma intorc la chapter-ul corespunzator pe care l-am primit prin acea pereche (nume, id).
     public void handleCreateFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == saveButton) {
-                String question = questionField.getText();
-                String answer = answerField.getText();
+                String question = questionTextArea.getText();
+                String answer = answerTextArea.getText();
 
                 if (question.isEmpty()) {
                 question = "New empty question";
@@ -121,9 +122,9 @@ public class CreateFlashcardController {
     @FXML
     private void handleLoadQuestionImage() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Încarcă imagine pentru întrebare");
+        fileChooser.setTitle("Upload image for question");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imagini", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
 
         File selectedFile = fileChooser.showOpenDialog(load_img_q_button.getScene().getWindow());
@@ -144,9 +145,9 @@ public class CreateFlashcardController {
     @FXML
     private void handleLoadAnswerImage() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Încarcă imagine pentru răspuns");
+        fileChooser.setTitle("Upload image for answer");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Imagini", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
 
         File selectedFile = fileChooser.showOpenDialog(load_img_a_button.getScene().getWindow());

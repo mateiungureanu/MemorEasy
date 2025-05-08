@@ -15,7 +15,7 @@
         <VBox fx:id="front" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: lightblue; -fx-alignment: center; -fx-padding: 10;">
             <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="180.0">
                 <VBox alignment="CENTER" prefHeight="193.0" prefWidth="283.0" spacing="10">
-                    <ImageView fx:id="frontImageView" fitHeight="67.0" fitWidth="280.0" preserveRatio="true" />
+                    <ImageView fx:id="frontImageView" fitHeight="77.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
                     <TextArea fx:id="frontTextArea"
                               editable="false"
                               wrapText="true"
@@ -29,7 +29,7 @@
         <VBox fx:id="back" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: lightgreen; -fx-alignment: center; -fx-padding: 10;" visible="false">
             <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" prefHeight="280.0">
                 <VBox alignment="CENTER" spacing="10">
-                    <ImageView fx:id="backImageView" fitWidth="280.0" preserveRatio="true" />
+                    <ImageView fx:id="backImageView" fitHeight="77.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
                     <TextArea fx:id="backTextArea"
                               editable="false"
                               wrapText="true"
