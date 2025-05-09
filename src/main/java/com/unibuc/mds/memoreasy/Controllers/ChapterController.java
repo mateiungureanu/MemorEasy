@@ -197,4 +197,27 @@ public class ChapterController {
             }
         }
     }
+
+    public void goToEvaluateYourself(ActionEvent event) throws IOException {
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Evaluations/EvaluateYourselfView.fxml"));
+        Parent root=loader.load();
+        EvaluateYourselfController controller=loader.getController();
+        controller.setFlashcards(flashcards);
+        controller.setChapter_id(chapter_id);
+        controller.setChapter_name(chapter_name);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        if(ThemeManager.darkMode){
+            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+        }
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void goToFillInTheMissingWords(ActionEvent event) {
+    }
 }

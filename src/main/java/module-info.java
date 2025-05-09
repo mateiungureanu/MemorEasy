@@ -25,5 +25,6 @@ module com.unibuc.mds.memoreasy.memoreasy {
     opens com.unibuc.mds.memoreasy.Views.Flashcards to javafx.fxml;
     opens com.unibuc.mds.memoreasy.Views.Categories to javafx.fxml;
     opens com.unibuc.mds.memoreasy.Views.AllCategories to javafx.fxml;
+    opens com.unibuc.mds.memoreasy.Views.Evaluations to javafx.fxml;
     opens com.unibuc.mds.memoreasy.Views to javafx.fxml;
 }
