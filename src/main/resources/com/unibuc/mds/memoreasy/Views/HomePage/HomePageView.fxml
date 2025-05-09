@@ -27,7 +27,7 @@
                         <content>
                             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="300.0" spacing="30.0" styleClass="vbox">
                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="523.0" text="Daily Streak: x" textFill="#c2ad17" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="dailyStreakLabel" alignment="CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="523.0" text="Daily Streak: x" textFill="#c2ad17" VBox.vgrow="ALWAYS">
                                         <graphic>
                                             <ImageView fitHeight="43.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>

@@ -1,6 +1,7 @@
 package com.unibuc.mds.memoreasy.Controllers;
 
 import com.unibuc.mds.memoreasy.Models.Flashcard;
+import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,6 +22,10 @@ import org.kordamp.bootstrapfx.BootstrapFX;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -133,6 +138,7 @@ public class EvaluateYourselfController implements Initializable {
         finalScoreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: " + color +";");
         Button back = new Button("Go back");
         back.setOnAction(event ->{
+
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/ChapterView.fxml"));
                 Parent root = loader.load();
@@ -158,6 +164,21 @@ public class EvaluateYourselfController implements Initializable {
 
         stackPane.setAlignment(Pos.CENTER);
         stackPane.getChildren().add(vBox);
+
+        try {
+            Connection con = DatabaseUtils.getConnection();
+            String sql="INSERT INTO audit(id_user,action,activity_date,no_flashcards) VALUES(?,?,CURRENT_DATE,?)";
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setInt(1,DatabaseUtils.getIdUser());
+            stmt.setInt(2,1);
+            stmt.setInt(3,correctAnswers);
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

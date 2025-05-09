@@ -4,6 +4,8 @@ import com.unibuc.mds.memoreasy.Models.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class DatabaseUtils {
     private static final String URL = "jdbc:mysql://localhost:3306/memoreasy";
@@ -81,5 +83,37 @@ public class DatabaseUtils {
 
     public static int getIdUser(){
         return id_current_user;
+    }
+    public static int getCurrentStreak(){
+        int streak=1;
+        try {
+            Connection con = getConnection();
+            String sql="SELECT activity_date FROM audit ORDER BY activity_date DESC";
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery(sql);
+
+            LocalDate localDate1,localDate2;
+            if(rs.next()){
+                localDate1= rs.getDate(1).toLocalDate();
+                while(rs.next()){
+                    localDate2=rs.getDate(1).toLocalDate();
+                    //ChronoUnit.DAYS.between(startdate,enddate)=day2-day1
+                    long diff = Math.abs(ChronoUnit.DAYS.between(localDate2,localDate1));
+
+                    if(diff==1){
+                        streak++;
+                    } else if (diff>1) {
+                        break;
+                    }
+                    localDate1=localDate2;
+                }
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return streak;
     }
 } 
