@@ -2,6 +2,7 @@ package com.unibuc.mds.memoreasy.Models;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class Chapter {
 
@@ -10,6 +11,7 @@ public class Chapter {
     private int categoryId;
     private String name;
     private LocalDateTime last_accessed;
+    private List<Flashcard> flashcardList;
 
     public Chapter(int id1, int id2, String n, LocalDateTime date) {
         chapterId = id1;
@@ -34,6 +36,8 @@ public class Chapter {
         return last_accessed;
     }
 
+    public List<Flashcard> getFlashcardList(){return flashcardList;}
+
     public void setChapterId(int id_chapter) {
         this.chapterId = id_chapter;
     }
@@ -49,4 +53,6 @@ public class Chapter {
     public void setLast_accessed(LocalDateTime last_accessed) {
         this.last_accessed = last_accessed;
     }
+
+    public void setFlashcardList(List<Flashcard> flashcardList){this.flashcardList=flashcardList;}
 }

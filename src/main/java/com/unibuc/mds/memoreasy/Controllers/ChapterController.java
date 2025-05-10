@@ -58,7 +58,7 @@ public class ChapterController {
 
             while (rs.next()) {
                 // Adauga fiecare flashcard în lista
-                flashcards.add(new Flashcard(rs.getInt(1), rs.getString(3), rs.getString(5), rs.getBytes(4), rs.getBytes(6)));
+                flashcards.add(new Flashcard(rs.getInt(1), rs.getString(3), rs.getBytes(4), rs.getString(5), rs.getBytes(6)));
             }
             con.close();
 

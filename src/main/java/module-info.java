@@ -12,6 +12,9 @@ module com.unibuc.mds.memoreasy.memoreasy {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires jbcrypt;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
+
 
     exports com.unibuc.mds.memoreasy;
     exports com.unibuc.mds.memoreasy.Controllers;
