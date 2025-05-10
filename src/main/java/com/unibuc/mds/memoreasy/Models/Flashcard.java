@@ -8,6 +8,8 @@ public class Flashcard {
     private String answer;
     private byte []image_a;
 
+    public Flashcard(){}
+
     public Flashcard(int id_flashcard, String question, String answer) {
         this.id_flashcard = id_flashcard;
         this.question = question;

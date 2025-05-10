@@ -183,7 +183,15 @@ public class AllCategoriesController implements Initializable {
         fileChooser.setTitle("Export the category");
         fileChooser.setInitialFileName("chapter");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files","*.json"));
-        String filePath=fileChooser.showSaveDialog(buttonExport.getScene().getWindow()).getAbsolutePath();
+        File file = fileChooser.showSaveDialog(buttonImport.getScene().getWindow());
+        if(file==null){
+            return;
+        }
+        String filePath = file.getAbsolutePath();
+
+
+        Parent root=((Node)e.getSource()).getScene().getRoot();
+        root.setDisable(true);
 
         try{
             Connection con=DatabaseUtils.getConnection();
@@ -235,11 +243,93 @@ public class AllCategoriesController implements Initializable {
             exception.printStackTrace();
         }
 
+        root.setDisable(false);
     }
 
     @FXML
-    private void importCategory(Event e){
+    private void importCategory(Event e) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import the category");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        File file = fileChooser.showOpenDialog(buttonImport.getScene().getWindow());
+        if(file==null){
+            return;
+        }
+        String filePath = file.getAbsolutePath();
+
+        Parent root=((Node)e.getSource()).getScene().getRoot();
+        root.setDisable(true);
+
+        Category category = objectMapper.readValue(new File(filePath), Category.class);
+
+        try (Connection con = DatabaseUtils.getConnection()) {
+
+            String sql1 = "INSERT INTO category(id_user, name) VALUES (?, ?)";
+            try (PreparedStatement stmt1 = con.prepareStatement(sql1,Statement.RETURN_GENERATED_KEYS)) {
+                stmt1.setInt(1, DatabaseUtils.getIdUser());
+                stmt1.setString(2, category.getName());
+                stmt1.executeUpdate();
+
+                try(ResultSet generatedKeys= stmt1.getGeneratedKeys()){
+                    if(generatedKeys.next()){
+                        category.setId_category(generatedKeys.getInt(1));
+                    }
+                }
+            }
+
+            List<Chapter> chapters = category.getChapterList();
+            for (Chapter chapter : chapters) {
+                String sql2 = "INSERT INTO chapter(id_category, name, last_accessed) VALUES (?, ?, ?)";
+                try (PreparedStatement stmt2 = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS)) {
+                    //CATEGORY_ID IS GENERATED AT INSERTION
+                    stmt2.setInt(1, category.getId_category());
+                    stmt2.setString(2, chapter.getName());
+                    stmt2.setTimestamp(3, chapter.getLast_accessed() != null ? Timestamp.valueOf(chapter.getLast_accessed()) : null);
+                    stmt2.executeUpdate();
+
+                    try(ResultSet generatedKeys= stmt2.getGeneratedKeys()){
+                        if(generatedKeys.next()){
+                            chapter.setChapterId(generatedKeys.getInt(1));
+                        }
+                    }
+                }
+
+                List<Flashcard> flashcards = chapter.getFlashcardList();
+                for (Flashcard flashcard : flashcards) {
+                    String sql3 = "INSERT INTO flashcard(id_chapter, question, image_q, answer, image_a) VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement stmt3 = con.prepareStatement(sql3)) {
+                        //CHAPTER_ID IS GENERATED AT INSERTION
+                        stmt3.setInt(1, chapter.getChapterId());
+                        stmt3.setString(2, flashcard.getQuestion());
+                        stmt3.setBytes(3, flashcard.getImage_q());
+                        stmt3.setString(4, flashcard.getAnswer());
+                        stmt3.setBytes(5, flashcard.getImage_a());
+                        stmt3.executeUpdate();
+                    }
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        root.setDisable(false);
+        try {
+            Parent root2 = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
+            Stage stage = (Stage) (root).getScene().getWindow();
+            Scene scene = new Scene(root2);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if(ThemeManager.darkMode){
+                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (Exception exception){
+            exception.printStackTrace();
+        }
     }
-
 }

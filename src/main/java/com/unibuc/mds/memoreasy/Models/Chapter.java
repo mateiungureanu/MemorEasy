@@ -13,6 +13,8 @@ public class Chapter {
     private LocalDateTime last_accessed;
     private List<Flashcard> flashcardList;
 
+    public Chapter(){}
+
     public Chapter(int id1, int id2, String n, LocalDateTime date) {
         chapterId = id1;
         categoryId = id2;

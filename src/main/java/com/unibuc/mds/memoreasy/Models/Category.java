@@ -8,6 +8,8 @@ public class Category {
     private String name;
     private List<Chapter> chapterList;
 
+    public Category(){}
+
     public Category(int id_category, int id_user, String name) {
         this.id_category = id_category;
         this.id_user = id_user;
