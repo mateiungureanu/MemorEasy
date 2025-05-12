@@ -3,7 +3,6 @@ package com.unibuc.mds.memoreasy.Controllers;
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -107,15 +106,26 @@ public class EvaluateYourselfController implements Initializable {
     }
 
     private void displayFlashcard(Flashcard flashcard) {
+        if (!flashcardController.isShowingFront()) {
+            flashcardController.flipCard(); // intoarce cardul daca e pe spate
+        }
+
         flashcardController.getFrontTextArea().setText(flashcard.getQuestion());
         flashcardController.getBackTextArea().setText(flashcard.getAnswer());
         if(flashcard.getImage_q()!=null){
             flashcardController.getFrontImageView().setImage(new Image(new ByteArrayInputStream(flashcard.getImage_q())));
 
         }
+        else {
+            flashcardController.getFrontImageView().setImage(null); // elimina imaginea anterioara
+        }
+
         if(flashcard.getImage_a()!=null){
             flashcardController.getBackImageView().setImage(new Image(new ByteArrayInputStream(flashcard.getImage_a())));
 
+        }
+        else {
+            flashcardController.getBackImageView().setImage(null); // elimina imaginea anterioara
         }
     }
 
@@ -170,7 +180,7 @@ public class EvaluateYourselfController implements Initializable {
             String sql="INSERT INTO audit(id_user,action,activity_date,no_flashcards) VALUES(?,?,CURRENT_DATE,?)";
             PreparedStatement stmt=con.prepareStatement(sql);
             stmt.setInt(1,DatabaseUtils.getIdUser());
-            stmt.setInt(2,1);
+            stmt.setInt(2,1);//Primul tip de teste
             stmt.setInt(3,correctAnswers);
             stmt.executeUpdate();
             stmt.close();

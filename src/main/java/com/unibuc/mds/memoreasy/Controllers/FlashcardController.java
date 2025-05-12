@@ -1,18 +1,15 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -54,7 +51,7 @@ public class FlashcardController implements Initializable {
     }
 
     @FXML
-    private void flipCard() {
+    public void flipCard() {
         double startAngle = showingFront ? 0 : 180;
         double endAngle = showingFront ? 180 : 0;
 
@@ -78,5 +75,8 @@ public class FlashcardController implements Initializable {
         firstHalf.play();
     }
 
+    public boolean isShowingFront() {
+        return showingFront;
+    }
 
 }

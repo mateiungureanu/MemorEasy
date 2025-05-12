@@ -163,14 +163,11 @@ public class EditFlashcardController {
                     image_a_view.setImage(null);
                 }
 
-            } else {
-                System.out.println("No category found for id_category = " + idFlashcard);
             }
 
             rs2.close();
             stmt2.close();
             con.close();
-//            newCategoryName.setText(rs2.getString(1));
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

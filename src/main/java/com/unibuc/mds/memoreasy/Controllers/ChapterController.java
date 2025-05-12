@@ -227,7 +227,6 @@ public class ChapterController {
                 String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
-
             stage.setScene(scene);
             stage.show();
         }
