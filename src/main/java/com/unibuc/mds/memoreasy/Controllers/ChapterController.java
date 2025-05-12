@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChapterController {
@@ -199,24 +200,43 @@ public class ChapterController {
     }
 
     public void goToEvaluateYourself(ActionEvent event) throws IOException {
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Evaluations/EvaluateYourselfView.fxml"));
-        Parent root=loader.load();
-        EvaluateYourselfController controller=loader.getController();
-        controller.setFlashcards(flashcards);
-        controller.setChapter_id(chapter_id);
-        controller.setChapter_name(chapter_name);
+        if (flashcards.size() >= 5) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Evaluations/EvaluateYourselfView.fxml"));
+            Parent root = loader.load();
+            EvaluateYourselfController controller = loader.getController();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
-            scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            // Creeaza o copie a listei originale ca sa nu o modifici direct
+            ArrayList<Flashcard> shuffled = new ArrayList<>(flashcards);
+
+            // Amestecă lista
+            Collections.shuffle(shuffled);
+
+            // Selecteaza primele 5 elemente s
+            int numar = Math.min(5, shuffled.size());
+            ArrayList<Flashcard> selectie = new ArrayList<>(shuffled.subList(0, numar));
+
+
+            controller.setFlashcards(selectie);
+            controller.setChapter_id(chapter_id);
+            controller.setChapter_name(chapter_name);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
+
+            stage.setScene(scene);
+            stage.show();
         }
-
-        stage.setScene(scene);
-        stage.show();
+        else{
+            atentionare.setText("Not enough flashcards available (minimum 5)!");
+            atentionare.setStyle("-fx-text-fill: red;");
+        }
     }
+
 
     public void goToFillInTheMissingWords(ActionEvent event) {
     }
