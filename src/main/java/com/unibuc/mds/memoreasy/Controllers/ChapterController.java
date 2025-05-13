@@ -237,6 +237,40 @@ public class ChapterController {
     }
 
 
-    public void goToFillInTheMissingWords(ActionEvent event) {
+    public void goToFillInTheMissingWords(ActionEvent event) throws IOException {
+        if (flashcards.size() >= 5) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Evaluations/FillInTheMissingWordsView.fxml"));
+            Parent root = loader.load();
+            FillInTheMissingWordsController controller = loader.getController();
+
+            // Creeaza o copie a listei originale ca sa nu o modifici direct
+            ArrayList<Flashcard> shuffled = new ArrayList<>(flashcards);
+
+            // Amestecă lista
+            Collections.shuffle(shuffled);
+
+            // Selecteaza primele 5 elemente s
+            int numar = Math.min(5, shuffled.size());
+            ArrayList<Flashcard> selectie = new ArrayList<>(shuffled.subList(0, numar));
+
+
+            controller.setFlashcards(selectie);
+            controller.setChapter_id(chapter_id);
+            controller.setChapter_name(chapter_name);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
+            stage.setScene(scene);
+            stage.show();
+        }
+        else{
+            atentionare.setText("Not enough flashcards available (minimum 5)!");
+            atentionare.setStyle("-fx-text-fill: red;");
+        }
     }
 }

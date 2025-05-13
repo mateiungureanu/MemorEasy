@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +129,7 @@ public class EvaluateYourselfController implements Initializable {
     }
 
     private void updateProgress() {
-        progress.setText("Scor: " + currentIndex + "/" + flashcards.size());
+        progress.setText("Scor: " + correctAnswers + "/" + flashcards.size());
     }
 
     private void endEvaluation() {
