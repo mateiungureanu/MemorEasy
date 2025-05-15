@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.unibuc.mds.memoreasy.Controllers.MatchingTestController" fx:id="stackPane">
+
+    <VBox spacing="20" alignment="CENTER">
+        <HBox spacing="30">
+            <VBox fx:id="questionBox" alignment="CENTER_RIGHT"/>
+            <Pane fx:id="linePane" minWidth="100" maxWidth="100" prefWidth="100" pickOnBounds="false"/>
+            <VBox fx:id="answerBox" alignment="CENTER_LEFT"/>
+        </HBox>
+    </VBox>
+</StackPane>
