@@ -39,12 +39,20 @@
                                             <Font size="32.0" />
                                         </font>
                                     </Label>
-                                    <LineChart maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="537.0" title="YOUR HISTORY" VBox.vgrow="ALWAYS">
+<!--                                    <LineChart maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="537.0" title="YOUR HISTORY" VBox.vgrow="ALWAYS">-->
+<!--                                        <xAxis>-->
+<!--                                            <CategoryAxis label="Time" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />-->
+<!--                                        </xAxis>-->
+<!--                                        <yAxis>-->
+<!--                                            <NumberAxis label="No.Flashcards" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="LEFT" />-->
+<!--                                        </yAxis>-->
+<!--                                    </LineChart>-->
+                                    <LineChart fx:id="performanceChart" title="Weekly Performance" minHeight="500" VBox.vgrow="ALWAYS">
                                         <xAxis>
-                                            <CategoryAxis label="Time" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                            <CategoryAxis label="Week" />
                                         </xAxis>
                                         <yAxis>
-                                            <NumberAxis label="No.Flashcards" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="LEFT" />
+                                            <NumberAxis label="No. Flashcards" />
                                         </yAxis>
                                     </LineChart>
                                     <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="See if you can recall this" VBox.vgrow="ALWAYS">

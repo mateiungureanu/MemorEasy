@@ -181,9 +181,9 @@ public class AllCategoriesController implements Initializable {
         int categoryID=categories.get(currentIndex).getId_category();
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle("Export the category");
-        fileChooser.setInitialFileName("chapter");
+        fileChooser.setInitialFileName(categories.get(pagination.getCurrentPageIndex()).getName());
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files","*.json"));
-        File file = fileChooser.showSaveDialog(buttonImport.getScene().getWindow());
+        File file = fileChooser.showSaveDialog(buttonExport.getScene().getWindow());
         if(file==null){
             return;
         }
@@ -200,7 +200,6 @@ public class AllCategoriesController implements Initializable {
             stmt1.setInt(1,categoryID);
             ResultSet rs1= stmt1.executeQuery();
 
-//            Category category=new Category(rs1.getInt(1),rs1.getInt(2),rs1.getString(3));
 
             rs1.next();
 
