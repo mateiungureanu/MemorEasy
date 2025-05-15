@@ -36,6 +36,7 @@
                               <children>
                                  <Button fx:id="evaluateYourselfButton" mnemonicParsing="false" onAction="#goToEvaluateYourself" text="Evaluate Yourself" />
                                  <Button fx:id="FillInTheMissingWordsButton" mnemonicParsing="false" onAction="#goToFillInTheMissingWords" text="Fill in the Missing Words" />
+                                 <Button fx:id="MatchingTestButton" mnemonicParsing="false" onAction="#goToMatchingTest" text="Matching Test" />
                               </children>
                               <VBox.margin>
                                  <Insets />
