@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
@@ -48,11 +50,10 @@ public class HomePageController implements Initializable {
     private void loadWeeklyPerformance() {
         try (Connection connection = DatabaseUtils.getConnection()) {
             String query = """
-                SELECT 
-                    MIN(activity_date) AS start_date
-                FROM audit
-                WHERE id_user = ?;
-            """;
+            SELECT MIN(activity_date) AS start_date
+            FROM audit
+            WHERE id_user = ?;
+        """;
 
             PreparedStatement startDateStatement = connection.prepareStatement(query);
             int userId = DatabaseUtils.getIdUser();
@@ -75,17 +76,16 @@ public class HomePageController implements Initializable {
 
             LocalDate oneYearAgo = LocalDate.now().minusWeeks(52);
             LocalDate effectiveStartDate = startDate.isBefore(oneYearAgo) ? oneYearAgo : startDate;
-
             String performanceQuery = """
-                SELECT 
-                    YEAR(activity_date) AS year, 
-                    WEEK(activity_date) AS week, 
-                    SUM(no_flashcards) AS total_flashcards
-                FROM audit
-                WHERE id_user = ? AND activity_date >= ?
-                GROUP BY year, week
-                ORDER BY year, week;
-            """;
+            SELECT
+                YEAR(activity_date) AS year,
+                WEEK(activity_date, 0) AS week,
+                SUM(no_flashcards) AS total_flashcards
+            FROM audit
+            WHERE id_user = ? AND activity_date >= ?
+            GROUP BY year, week
+            ORDER BY year, week;
+        """;
 
             PreparedStatement performanceStatement = connection.prepareStatement(performanceQuery);
             performanceStatement.setInt(1, userId);
@@ -93,23 +93,13 @@ public class HomePageController implements Initializable {
 
             ResultSet resultSet = performanceStatement.executeQuery();
 
-            
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             series.setName("Weekly Performance");
 
-            LocalDate currentDate = LocalDate.now();
-            WeekFields weekFields = WeekFields.of(Locale.getDefault());
-            int startWeek = effectiveStartDate.get(weekFields.weekOfWeekBasedYear());
-            int startYear = effectiveStartDate.getYear();
-
             int weekCounter = 1;
-
-            while (!startWeek.isAfter(now)) {
-                int year = startWeek.getYear();
-                int week = startWeek.get(weekFields.weekOfWeekBasedYear());
-                int total = weekData.getOrDefault(year + "-" + week, 0);
+            while (resultSet.next()) {
+                int total = resultSet.getInt("total_flashcards");
                 series.getData().add(new XYChart.Data<>("Week " + weekCounter, total));
-                startWeek = startWeek.plusWeeks(1);
                 weekCounter++;
             }
 
