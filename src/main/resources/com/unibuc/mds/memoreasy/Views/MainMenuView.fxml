@@ -63,24 +63,6 @@
                     <Insets left="5.0" right="5.0" />
                 </VBox.margin>
             </Button>
-            <Button fx:id="homeButton2" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="54.0" prefWidth="149.0" text="Games">
-                <graphic>
-                    <ImageView fitHeight="35.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
-                </graphic>
-                <font>
-                    <Font size="17.0" />
-                </font>
-                <styleClass>
-                    <String fx:value="btn" />
-                    <String fx:value="btn-danger" />
-                </styleClass>
-                <cursor>
-                    <Cursor fx:constant="DEFAULT" />
-                </cursor>
-                <VBox.margin>
-                    <Insets left="5.0" right="5.0" />
-                </VBox.margin>
-            </Button>
       <Button fx:id="toggleThemeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#toggleDarkMode" prefHeight="54.0" prefWidth="149.0" text="Mode">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />

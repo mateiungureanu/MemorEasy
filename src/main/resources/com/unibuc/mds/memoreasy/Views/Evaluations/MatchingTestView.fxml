@@ -9,9 +9,9 @@
 
     <VBox spacing="20" alignment="CENTER">
         <HBox spacing="30">
-            <VBox fx:id="questionBox" alignment="CENTER_RIGHT"/>
-            <Pane fx:id="linePane" minWidth="100" maxWidth="100" prefWidth="100" pickOnBounds="false"/>
-            <VBox fx:id="answerBox" alignment="CENTER_LEFT"/>
+            <VBox fx:id="questionBox" minWidth="100" maxWidth="800" style="-fx-background-color: lightgreen;" alignment="CENTER_RIGHT"/>
+            <Pane fx:id="linePane" minWidth="100" maxWidth="100" prefWidth="100" style="-fx-background-color: transparent;" pickOnBounds="false"/>
+            <VBox fx:id="answerBox" minWidth="100" maxWidth="800" style="-fx-background-color: lightgreen;" alignment="CENTER_LEFT"/>
         </HBox>
     </VBox>
 </StackPane>
