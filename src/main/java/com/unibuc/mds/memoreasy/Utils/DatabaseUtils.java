@@ -84,6 +84,7 @@ public class DatabaseUtils {
     public static int getIdUser(){
         return id_current_user;
     }
+
     public static int getCurrentStreak(){
         int streak=1;
         try {
@@ -97,7 +98,6 @@ public class DatabaseUtils {
                 localDate1= rs.getDate(1).toLocalDate();
                 while(rs.next()){
                     localDate2=rs.getDate(1).toLocalDate();
-                    //ChronoUnit.DAYS.between(startdate,enddate)=day2-day1
                     long diff = Math.abs(ChronoUnit.DAYS.between(localDate2,localDate1));
 
                     if(diff==1){

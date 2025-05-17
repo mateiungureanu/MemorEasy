@@ -1,5 +1,4 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -16,18 +15,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Button;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.HPos;
 import javafx.scene.text.TextAlignment;
-import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -48,8 +41,6 @@ public class MatchingTestController implements Initializable {
     private StackPane stackPane;
     @FXML
     private Pane linePane;
-    @FXML
-    private Label progress;
 
     private List<Flashcard> flashcards;
     private List<Label> questionLabels = new ArrayList<>();

@@ -1,23 +1,13 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import org.kordamp.bootstrapfx.BootstrapFX;
-import org.kordamp.ikonli.javafx.FontIcon;
-
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -72,10 +62,14 @@ public class HomePageController implements Initializable {
             LocalDate startDate = null;
 
             if (startDateResult.next()) {
-                startDate = startDateResult.getDate("start_date").toLocalDate();
+                Date sqlDate = startDateResult.getDate("start_date");
+                if (sqlDate != null) {
+                    startDate = sqlDate.toLocalDate();
+                }
             }
 
             if (startDate == null) {
+                performanceChart.getData().clear();
                 return;
             }
 
@@ -95,10 +89,11 @@ public class HomePageController implements Initializable {
 
             PreparedStatement performanceStatement = connection.prepareStatement(performanceQuery);
             performanceStatement.setInt(1, userId);
-            performanceStatement.setDate(2, java.sql.Date.valueOf(effectiveStartDate));
+            performanceStatement.setDate(2, Date.valueOf(effectiveStartDate));
 
             ResultSet resultSet = performanceStatement.executeQuery();
 
+            
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             series.setName("Weekly Performance");
 
@@ -109,15 +104,13 @@ public class HomePageController implements Initializable {
 
             int weekCounter = 1;
 
-            while (resultSet.next()) {
-                int year = resultSet.getInt("year");
-                int week = resultSet.getInt("week");
-                int totalFlashcards = resultSet.getInt("total_flashcards");
-
-                if (year > startYear || (year == startYear && week >= startWeek)) {
-                    series.getData().add(new XYChart.Data<>("Week " + weekCounter, totalFlashcards));
-                    weekCounter++;
-                }
+            while (!startWeek.isAfter(now)) {
+                int year = startWeek.getYear();
+                int week = startWeek.get(weekFields.weekOfWeekBasedYear());
+                int total = weekData.getOrDefault(year + "-" + week, 0);
+                series.getData().add(new XYChart.Data<>("Week " + weekCounter, total));
+                startWeek = startWeek.plusWeeks(1);
+                weekCounter++;
             }
 
             performanceChart.getData().clear();
