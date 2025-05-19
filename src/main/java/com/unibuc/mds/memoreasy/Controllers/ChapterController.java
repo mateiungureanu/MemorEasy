@@ -1,5 +1,4 @@
 package com.unibuc.mds.memoreasy.Controllers;
-
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -15,9 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
 import org.kordamp.bootstrapfx.BootstrapFX;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,6 +24,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static javafx.fxml.FXMLLoader.load;
 
 public class ChapterController {
     @FXML
@@ -48,6 +47,20 @@ public class ChapterController {
     private Label atentionare;
 
     List<Flashcard> flashcards;
+
+    @FXML
+    private Button buttonBack;
+
+    private int category_id;
+    private String category_name;
+
+    public void setCategoryId(int category_id) {
+        this.category_id = category_id;
+    }
+
+    public void setCategoryName(String category_name) {
+        this.category_name = category_name;
+    }
 
     private void loadFlashcards() {
         String q = "SELECT * FROM FLASHCARD WHERE id_chapter=" + chapter_id;
@@ -309,6 +322,31 @@ public class ChapterController {
         else{
             atentionare.setText("Not enough flashcards available (minimum 5)!");
             atentionare.setStyle("-fx-text-fill: red;");
+        }
+    }
+
+    public void goBack(ActionEvent event) throws IOException {
+        if (event.getSource() == buttonBack) {
+            Parent root;
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Categories/CategoryView.fxml"));
+                root = loader.load();
+                CategoryController controller = loader.getController();
+                controller.addCategoryName(category_name);
+                controller.setCategory_id(category_id);
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if(ThemeManager.darkMode){
+                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
+            stage.setScene(scene);
+            stage.show();
         }
     }
 }

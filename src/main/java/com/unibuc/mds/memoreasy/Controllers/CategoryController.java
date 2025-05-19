@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static javafx.fxml.FXMLLoader.load;
+
 public class CategoryController implements Initializable {
     @FXML
     private Label labelCategory;
@@ -43,6 +45,9 @@ public class CategoryController implements Initializable {
 
     @FXML
     private Label atentionare;
+
+    @FXML
+    private Button buttonBack;
 
     private int category_id;
     private String category_name;
@@ -103,6 +108,8 @@ public class CategoryController implements Initializable {
                 ChapterController controller = loader.getController();
                 controller.setChapterName(chapters.get(index).getName());
                 controller.setChapter_Id(chapters.get(index).getChapterId());
+                controller.setCategoryId(category_id);
+                controller.setCategoryName(category_name);
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -196,6 +203,21 @@ public class CategoryController implements Initializable {
                 atentionare.setText("No chapters available!");
                 atentionare.setStyle("-fx-text-fill: orange;");
             }
+        }
+    }
+
+    public void goBack(ActionEvent event) throws IOException {
+        if (event.getSource() == buttonBack) {
+            Parent root = load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+            if(ThemeManager.darkMode){
+                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+            }
+            stage.setScene(scene);
+            stage.show();
         }
     }
 }

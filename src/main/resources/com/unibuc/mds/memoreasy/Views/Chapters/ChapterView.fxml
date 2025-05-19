@@ -30,6 +30,7 @@
                                             <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createFlashcard" styleClass="btn-success" text="NEW" />
                                             <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#editFlashcard" styleClass="btn-warning" text="EDIT" />
                                             <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteFlashcard" styleClass="btn-danger" text="DELETE" />
+                                            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#goBack" styleClass="btn-primary" text="BACK" />
                                         </children>
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">

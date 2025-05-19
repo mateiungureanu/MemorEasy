@@ -32,6 +32,7 @@
                                             <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createChapter" styleClass="btn-success" text="NEW" />
                                             <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#editChapter" styleClass="btn-warning" text="EDIT" />
                                             <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteChapter" styleClass="btn-danger" text="DELETE" />
+                                            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#goBack" styleClass="btn-primary" text="BACK" />
                                         </children>
                                     </HBox>
                            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Chapters          ">
