@@ -299,8 +299,9 @@ public class ChapterController {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             if (ThemeManager.darkMode) {
-                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
-                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme2.css";
+                //scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+                scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
             }
             stage.setScene(scene);
             stage.show();

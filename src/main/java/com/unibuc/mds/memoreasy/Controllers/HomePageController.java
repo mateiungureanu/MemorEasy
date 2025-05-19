@@ -11,10 +11,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {

@@ -124,7 +124,7 @@ public class MatchingTestController implements Initializable {
         String answer = selectedAnswer.getText();
 
         boolean isCorrect = false;
-        for (Flashcard flashcard : flashcards) {
+        for (Flashcard flashcard : flashcards) {//Putem avea intrebari identice, raspunsuri identice, chiar si acceasi intrebare cu raspunsuri diferite.
             if (flashcard.getQuestion().equals(question) && flashcard.getAnswer().equals(answer)) {
                 isCorrect = true;
                 break;
