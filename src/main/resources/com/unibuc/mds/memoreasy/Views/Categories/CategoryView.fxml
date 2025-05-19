@@ -48,7 +48,7 @@
                                             <Font size="22.0" />
                                         </font>
                                     </Text>
-                                    <ChoiceBox prefWidth="150.0" />
+                                    <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
                                     <Pagination fx:id="pagination" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0" prefWidth="561.0" VBox.vgrow="ALWAYS" />
                            <Label fx:id="atentionare" />
                                 </children>

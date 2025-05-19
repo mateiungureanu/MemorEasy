@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+import com.unibuc.mds.memoreasy.Models.Category;
 import com.unibuc.mds.memoreasy.Models.Chapter;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -10,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,7 +42,6 @@ public class CategoryController implements Initializable {
     private Button buttonNew;
     @FXML
     private Button buttonDelete;
-
     @FXML
     private Button buttonEdit;
 
@@ -48,6 +50,11 @@ public class CategoryController implements Initializable {
 
     @FXML
     private Button buttonBack;
+
+    @FXML
+    private ChoiceBox<String> choiceBox;
+    private final String []criteria=new String[]{"Name(↑)","Name(↓)","Last Accessed(↑)",
+                                        "Last Accessed(↓)"};
 
     private int category_id;
     private String category_name;
@@ -128,9 +135,32 @@ public class CategoryController implements Initializable {
         return myPane;
     }
 
+
+    public void sortChapters(ActionEvent event){
+        switch (choiceBox.getValue()) {
+            case "Name(↑)":
+                chapters.sort(Comparator.comparing(c -> c.getName().toLowerCase()));
+                break;
+            case "Name(↓)":
+                chapters.sort(Comparator.comparing((Chapter c) -> c.getName().toLowerCase()).reversed());
+                break;
+            case "Last Accessed(↑)":
+                chapters.sort(Comparator.comparing(Chapter::getLast_accessed));
+                break;
+            case "Last Accessed(↓)":
+                chapters.sort(Comparator.comparing(Chapter::getLast_accessed).reversed());
+            default: break;
+        }
+        //No. elements doesn't change
+//      pagination.setPageCount(chapters.size());
+        pagination.setPageFactory(this::createPage);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        choiceBox.getItems().addAll(criteria);
+        choiceBox.setOnAction(this::sortChapters);
     }
 
     //La crearea unui capitol, dau mai departe, numele si id-ul categoriei sale.

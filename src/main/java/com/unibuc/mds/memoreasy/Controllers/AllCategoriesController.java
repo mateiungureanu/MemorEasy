@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.AnchorPane;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import static javafx.fxml.FXMLLoader.load;
@@ -49,6 +51,10 @@ public class AllCategoriesController implements Initializable {
     private Button buttonExport;
     @FXML
     private Button buttonImport;
+
+    @FXML
+    private ChoiceBox<String> choiceBox;
+    private final String []criteria=new String[]{"Name(↑)","Name(↓)"};
 
     @FXML
     private Label atentionare;
@@ -88,10 +94,29 @@ public class AllCategoriesController implements Initializable {
         }
     }
 
+    public void sortCategories(ActionEvent event){
+        switch (choiceBox.getValue()) {
+            case "Name(↑)":
+                categories.sort(Comparator.comparing(c -> c.getName().toLowerCase()));
+                break;
+            case "Name(↓)":
+                categories.sort(Comparator.comparing((Category c) -> c.getName().toLowerCase()).reversed());
+                break;
+
+            default: break;
+        }
+        //No. elements doesn't change
+//      pagination.setPageCount(categories.size());
+        pagination.setPageFactory(this::createPage);
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        choiceBox.getItems().addAll(criteria);
+        choiceBox.setOnAction(this::sortCategories);
+
         categories = new ArrayList<>();
         String sql = "SELECT * FROM CATEGORY WHERE ID_USER = ?";
         try {
