@@ -51,8 +51,8 @@ public class ChapterController {
     @FXML
     private Button buttonBack;
 
-    private int category_id;
-    private String category_name;
+    static private int category_id;
+    static private String category_name;
 
     public void setCategoryId(int category_id) {
         this.category_id = category_id;
