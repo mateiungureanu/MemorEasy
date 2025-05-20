@@ -5,75 +5,65 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-            prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1"
+            prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.unibuc.mds.memoreasy.Controllers.AllCategoriesController">
     <HBox layoutX="-1.0" layoutY="-1.0" prefHeight="361.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <children>
-            <fx:include source="../MainMenuView.fxml"/>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0"
-                  prefWidth="100.0" HBox.hgrow="ALWAYS">
-                <children>
-                    <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="1.7976931348623157E308"
-                                prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                        <content>
-                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                  prefHeight="300.0" prefWidth="300.0" spacing="30.0">
-                                <children>
-                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="CATEGORIES"
-                                           VBox.vgrow="ALWAYS">
-                                        <font>
-                                            <Font size="30.0"/>
-                                        </font>
-                                    </Label>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
-                                        <children>
-                                            <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createCategory"
-                                                    styleClass="btn-success" text="NEW"/>
-                                            <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#editCategory"
-                                                    styleClass="btn-warning" text="EDIT"/>
-                                            <Button fx:id="buttonDelete" mnemonicParsing="false"
-                                                    onAction="#deleteCategory" styleClass="btn-danger" text="DELETE"/>
-                                            <Button fx:id="buttonExport" mnemonicParsing="false"
-                                                    onAction="#exportCategory" styleClass="btn-info" text="EXPORT">
-                                                <HBox.margin>
-                                                    <Insets left="200.0"/>
-                                                </HBox.margin>
-                                            </Button>
-                                            <Button fx:id="buttonImport" mnemonicParsing="false"
-                                                    onAction="#importCategory" styleClass="btn-info" text="IMPORT">
-                                                <HBox.margin>
-                                                    <Insets left="10.0"/>
-                                                </HBox.margin>
-                                            </Button>
-                                        </children>
-                                    </HBox>
-                                    <Label prefHeight="18.0" prefWidth="566.0"
-                                           text="All categories are shown below — just click on one to select it!">
-                                        <font>
-                                            <Font size="16.0"/>
-                                        </font>
-                                    </Label>
-                                    <Label text="Sort by">
-                                        <font>
-                                            <Font name="Verdana" size="22.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets bottom="-20.0"/>
-                                        </VBox.margin>
-                                    </Label>
-                                    <ChoiceBox fx:id="choiceBox" prefWidth="150.0"/>
-                                    <Pagination fx:id="pagination" maxHeight="1.7976931348623157E308"
-                                                maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0"
-                                                prefWidth="561.0" VBox.vgrow="ALWAYS"/>
-                                    <Label fx:id="atentionare"/>
-                                </children>
-                            </VBox>
-                        </content>
-                    </ScrollPane>
-                </children>
-            </VBox>
-        </children>
+        <fx:include source="../MainMenuView.fxml"/>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0"
+              prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="1.7976931348623157E308"
+                        prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      prefHeight="300.0" prefWidth="300.0" spacing="30.0">
+                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="CATEGORIES"
+                           VBox.vgrow="ALWAYS">
+                        <font>
+                            <Font size="30.0"/>
+                        </font>
+                    </Label>
+                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                        <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#createCategory"
+                                styleClass="btn-success" text="NEW"/>
+                        <Button fx:id="buttonEdit" mnemonicParsing="false" onAction="#editCategory"
+                                styleClass="btn-warning" text="EDIT"/>
+                        <Button fx:id="buttonDelete" mnemonicParsing="false"
+                                onAction="#deleteCategory" styleClass="btn-danger" text="DELETE"/>
+                        <Button fx:id="buttonExport" mnemonicParsing="false"
+                                onAction="#exportCategory" styleClass="btn-info" text="EXPORT">
+                            <HBox.margin>
+                                <Insets left="200.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="buttonImport" mnemonicParsing="false"
+                                onAction="#importCategory" styleClass="btn-info" text="IMPORT">
+                            <HBox.margin>
+                                <Insets left="10.0"/>
+                            </HBox.margin>
+                        </Button>
+                    </HBox>
+                    <Label prefHeight="18.0" prefWidth="566.0"
+                           text="All categories are shown below — just click on one to select it!">
+                        <font>
+                            <Font size="16.0"/>
+                        </font>
+                    </Label>
+                    <Label text="Sort by">
+                        <font>
+                            <Font name="Verdana" size="22.0"/>
+                        </font>
+                        <VBox.margin>
+                            <Insets bottom="-20.0"/>
+                        </VBox.margin>
+                    </Label>
+                    <ChoiceBox fx:id="choiceBox" prefWidth="150.0"/>
+                    <Pagination fx:id="pagination" maxHeight="1.7976931348623157E308"
+                                maxWidth="1.7976931348623157E308" pageCount="49" prefHeight="363.0"
+                                prefWidth="561.0" VBox.vgrow="ALWAYS"/>
+                    <Label fx:id="atentionare"/>
+                </VBox>
+            </ScrollPane>
+        </VBox>
     </HBox>
 </AnchorPane>

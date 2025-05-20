@@ -86,7 +86,7 @@ public class DatabaseUtils {
         int streak = 1;
         try {
             Connection con = getConnection();
-            String sql = "SELECT activity_date FROM audit ORDER BY activity_date DESC";
+            String sql = "SELECT activity_date FROM audit WHERE id_user = " + id_current_user + " ORDER BY activity_date DESC";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 

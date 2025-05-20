@@ -12,62 +12,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.HomePageController">
-    <HBox layoutX="-1.0" layoutY="-1.0" prefHeight="361.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <children>
-            <fx:include source="../MainMenuView.fxml" />
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                <children>
-                    <Label fx:id="labelWelcome" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="445.0" text="Welcome!" VBox.vgrow="ALWAYS">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.HomePageController">
+    <HBox layoutX="-1.0" layoutY="-1.0" prefHeight="361.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <fx:include source="../MainMenuView.fxml"/>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0"
+              HBox.hgrow="ALWAYS">
+            <Label fx:id="labelWelcome" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
+                   prefHeight="35.0" prefWidth="445.0" text="Welcome!" VBox.vgrow="ALWAYS">
+                <font>
+                    <Font size="30.0"/>
+                </font>
+            </Label>
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="1.7976931348623157E308" prefHeight="200.0"
+                        prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0"
+                      prefWidth="300.0" spacing="30.0" styleClass="vbox">
+                    <Label fx:id="dailyStreakLabel" alignment="CENTER" contentDisplay="RIGHT"
+                           maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="523.0"
+                           text="Daily Streak: x" textFill="#c2ad17" VBox.vgrow="ALWAYS">
+                        <graphic>
+                            <ImageView fitHeight="43.0" fitWidth="38.0" pickOnBounds="true"
+                                       preserveRatio="true">
+                                <Image url="@../../images/flame.png"/>
+                            </ImageView>
+                        </graphic>
                         <font>
-                            <Font size="30.0" />
+                            <Font size="32.0"/>
                         </font>
                     </Label>
-                    <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                        <content>
-                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="300.0" spacing="30.0" styleClass="vbox">
-                                <children>
-                                    <Label fx:id="dailyStreakLabel" alignment="CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="523.0" text="Daily Streak: x" textFill="#c2ad17" VBox.vgrow="ALWAYS">
-                                        <graphic>
-                                            <ImageView fitHeight="43.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                                <image>
-                                                    <Image url="@../../images/flame.png" />
-                                                </image>
-                                            </ImageView>
-                                        </graphic>
-                                        <font>
-                                            <Font size="32.0" />
-                                        </font>
-                                    </Label>
-                                    <LineChart fx:id="performanceChart" title="Weekly Performance" minHeight="500" VBox.vgrow="ALWAYS">
-                                        <xAxis>
-                                            <CategoryAxis label="Week" />
-                                        </xAxis>
-                                        <yAxis>
-                                            <NumberAxis label="No. Flashcards" />
-                                        </yAxis>
-                                    </LineChart>
-                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="See if you can recall this" VBox.vgrow="ALWAYS">
-                                        <font>
-                                            <Font size="19.0" />
-                                        </font>
-                                    </Label>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                        <image>
-                                            <Image url="@../../images/logo.png" />
-                                        </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                        <image>
-                                            <Image url="@../../images/flame.png" />
-                                        </image>
-                                    </ImageView>
-                                </children>
-                            </VBox>
-                        </content>
-                    </ScrollPane>
-                </children>
-            </VBox>
-        </children>
+                    <LineChart fx:id="performanceChart" title="Weekly Performance" minHeight="500"
+                               VBox.vgrow="ALWAYS">
+                        <xAxis>
+                            <CategoryAxis label="Week"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="No. Flashcards"/>
+                        </yAxis>
+                    </LineChart>
+                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                           text="See if you can recall this" VBox.vgrow="ALWAYS">
+                        <font>
+                            <Font size="19.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </ScrollPane>
+        </VBox>
     </HBox>
 </AnchorPane>

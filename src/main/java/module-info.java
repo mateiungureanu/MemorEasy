@@ -14,6 +14,7 @@ module com.unibuc.mds.memoreasy.memoreasy {
     requires jbcrypt;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires org.kordamp.ikonli.fontawesome5;
 
 
     exports com.unibuc.mds.memoreasy;
