@@ -16,8 +16,8 @@
 
 ### Members
 - Ungureanu Matei-Ștefan – [GitHub](https://github.com/mateiungureanu)
-- Sărighioleanu Sebastian-Laurențiu – [GitHub](https://github.com/laur004)
-- Țelu Mihai-Sebastian – [GitHub](https://github.com/T-ms-code)
+- Sarighioleanu Sebastian-Laurențiu – [GitHub](https://github.com/laur004)
+- Telu Mihai-Sebastian – [GitHub](https://github.com/T-ms-code)
 
 ---
 
