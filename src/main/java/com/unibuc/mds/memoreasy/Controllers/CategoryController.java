@@ -20,10 +20,8 @@ import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -97,6 +95,17 @@ public class CategoryController implements Initializable {
         category_name=string;
     }
 
+
+    public void updateLastAccessed(int id) throws SQLException{
+        String sql="UPDATE CHAPTER SET last_accessed=CURRENT_TIME WHERE id_chapter=?";
+        Connection con = DatabaseUtils.getConnection();
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1,id);
+        stmt.executeUpdate();
+    }
+
+
+
     //La accesarea unui capitol, dau mai departe, numele si id-ul sau.
     private Node createPage(int index) {
         if (chapters == null || chapters.isEmpty() || index >= chapters.size()) {
@@ -110,6 +119,9 @@ public class CategoryController implements Initializable {
 
         myButton.setOnAction(event -> {
             try {
+                updateLastAccessed(chapters.get(index).getChapterId());
+
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/ChapterView.fxml"));
                 Parent root = loader.load();
                 ChapterController controller = loader.getController();
@@ -127,7 +139,7 @@ public class CategoryController implements Initializable {
                 }
                 stage.setScene(scene);
                 stage.show();
-            } catch (IOException ex) {
+            } catch (IOException | SQLException ex) {
                 throw new RuntimeException(ex);
             }
         });
