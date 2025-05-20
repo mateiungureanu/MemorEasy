@@ -2,26 +2,28 @@ package com.unibuc.mds.memoreasy.Controllers;
 
 import com.unibuc.mds.memoreasy.Models.User;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
-import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class LoginController {
     @FXML
     private TabPane tabPane;
-    
+
     @FXML
     private TextField loginUsername;
     @FXML
     private PasswordField loginPassword;
     @FXML
     private Label loginError;
-    
+
     @FXML
     private TextField registerUsername;
     @FXML

@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -31,11 +33,13 @@ public class EditCategoryController implements Initializable {
     public void edit(ActionEvent event) throws SQLException, IOException {
         if (event.getSource() == saveButton) {
             String newName = newCategoryName.getText();
-            if (newName.isEmpty()) {newName = "New Category without name";}
+            if (newName.isEmpty()) {
+                newName = "New Category without name";
+            }
             String sql = "update category set name = ? where id_category = " + idCategory;
             Connection con = DatabaseUtils.getConnection();
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, newName );
+            stmt.setString(1, newName);
             stmt.executeUpdate();
             con.close();
 
@@ -43,8 +47,8 @@ public class EditCategoryController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if(ThemeManager.darkMode){
-                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
             stage.setScene(scene);
@@ -53,15 +57,13 @@ public class EditCategoryController implements Initializable {
     }
 
 
-
-
-    public void loadCategoryName(){
-        String sql2= "select name from category where id_category = ?";
+    public void loadCategoryName() {
+        String sql2 = "select name from category where id_category = ?";
         try {
-            Connection con=DatabaseUtils.getConnection();
-            PreparedStatement stmt2=con.prepareStatement(sql2);
-            stmt2.setInt(1,idCategory);
-            ResultSet rs2=stmt2.executeQuery();
+            Connection con = DatabaseUtils.getConnection();
+            PreparedStatement stmt2 = con.prepareStatement(sql2);
+            stmt2.setInt(1, idCategory);
+            ResultSet rs2 = stmt2.executeQuery();
 
             if (rs2.next()) {
                 newCategoryName.setText(rs2.getString(1)); // sau rs2.getString(1)

@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,13 +19,14 @@ import java.sql.Statement;
 
 public class DeleteFlashcardController {
     private int idFlashcard;
+    private int id_chapter;
+    private String chapter_name;
+    @FXML
+    private Button deleteButton;
 
     public void setIdFlashcard(int idFlashcard) {
         this.idFlashcard = idFlashcard;
     }
-
-    private int id_chapter;
-    private String chapter_name;
 
     public void setChapterId(int chapter_id) {
         this.id_chapter = chapter_id;
@@ -33,14 +36,11 @@ public class DeleteFlashcardController {
         this.chapter_name = chapter_name;
     }
 
-    @FXML
-    private Button deleteButton;
-
     //Ma intorc la chapter-ul corespunzator pe care l-am primit prin acea pereche (nume, id).
     public void handleDeleteFlashcard(ActionEvent event) throws IOException {
         if (event.getSource() == deleteButton) {
             try (Connection connection = DatabaseUtils.getConnection()) {
-                String query = "DELETE FROM flashcard WHERE id_flashcard = "+idFlashcard;
+                String query = "DELETE FROM flashcard WHERE id_flashcard = " + idFlashcard;
                 Statement stmt = connection.createStatement();
                 stmt.executeUpdate(query);
             } catch (SQLException e) {
@@ -52,11 +52,11 @@ public class DeleteFlashcardController {
         ChapterController controller = loader.getController();
         controller.setChapterName(chapter_name);
         controller.setChapter_Id(id_chapter);
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
             scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
         }
         stage.setScene(scene);

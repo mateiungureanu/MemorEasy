@@ -1,10 +1,13 @@
 
-*{  -fx-background-color: #0e1742;
+* {
+    -fx-background-color: #0e1742;
     -fx-text-fill: white;
 }
+
 .chart-plot-background {
     -fx-background-color: #1e1e1e;
 }
+
 .chart-title {
     -fx-text-fill: white;
 }
@@ -26,8 +29,6 @@
 }
 
 
-
-
 /*#pagination .control-buttons-box {*/
 /*    -fx-background-color: #007acc; !* sau culoare închisă *!*/
 /*}*/
@@ -45,7 +46,7 @@
     -fx-background-color: #333333;
 }
 
-#pagination .number-button:selected{
+#pagination .number-button:selected {
     -fx-background-radius: 4;
     -fx-background-insets: 0; /* <- adaugă asta */
     -fx-background-color: #007acc; /* un accent albastru */
@@ -57,16 +58,15 @@
     -fx-background-color: #007acc !important;
     -fx-text-fill: white;
 }
+
 #pagination .pagination-control .left-arrow, .right-arrow {
     -fx-background-color: #333333;
 }
 
-#pagination .button{
+#pagination .button {
     -fx-background-color: #007acc;
     -fx-text-fill: white;
 }
-
-
 
 
 .text-field {
@@ -74,7 +74,6 @@
     -fx-control-inner-background: lightyellow;
     /*-fx-text-fill: black;*/
 }
-
 
 
 .choice-box {
@@ -111,7 +110,7 @@
     -fx-background-color: white;
 }
 
-.choice-box .menu-item, .choice-box .menu-item>* {
+.choice-box .menu-item, .choice-box .menu-item > * {
     -fx-background-color: white;
 }
 

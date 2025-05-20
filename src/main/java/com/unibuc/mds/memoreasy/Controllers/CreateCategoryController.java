@@ -1,16 +1,21 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import static javafx.fxml.FXMLLoader.load;
 
 public class CreateCategoryController {
@@ -31,11 +36,11 @@ public class CreateCategoryController {
         con.close();
 
         Parent root = load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
             scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
         }
         stage.setScene(scene);

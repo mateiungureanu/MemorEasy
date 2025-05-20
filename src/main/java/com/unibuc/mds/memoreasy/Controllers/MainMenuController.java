@@ -1,5 +1,6 @@
 package com.unibuc.mds.memoreasy.Controllers;
-import com.unibuc.mds.memoreasy.Utils.*;
+
+import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -27,13 +28,13 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button toggleThemeButton;
 
-    public void goToCategories(ActionEvent event) throws Exception{
-        Parent root= FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
+    public void goToCategories(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene=new Scene(root);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
             scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
         }
         stage.setScene(scene);
@@ -41,13 +42,13 @@ public class MainMenuController implements Initializable {
 
     }
 
-    public void goToHome(Event event) throws  Exception {
+    public void goToHome(Event event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/HomePage/HomePageView.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
             scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
         }
         stage.setScene(scene);
@@ -59,12 +60,10 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FontIcon icon = new FontIcon("fas-home");
         homeButton.setGraphic(icon);
-        if(ThemeManager.darkMode)
-        {
+        if (ThemeManager.darkMode) {
             FontIcon moon = new FontIcon("fas-moon");
             toggleThemeButton.setGraphic(moon);
-        }
-        else{
+        } else {
             FontIcon sun = new FontIcon("fas-sun");
             toggleThemeButton.setGraphic(sun);
         }
@@ -73,18 +72,15 @@ public class MainMenuController implements Initializable {
     }
 
 
-
     @FXML
-    private void toggleDarkMode(){
+    private void toggleDarkMode() {
         boolean newMode = !ThemeManager.isDarkMode();
         ThemeManager.setDarkMode(newMode);
 
-        if(ThemeManager.darkMode)
-        {
+        if (ThemeManager.darkMode) {
             FontIcon moon = new FontIcon("fas-moon");
             toggleThemeButton.setGraphic(moon);
-        }
-        else{
+        } else {
             FontIcon sun = new FontIcon("fas-sun");
             toggleThemeButton.setGraphic(sun);
         }

@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -6,21 +7,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Point2D;
-import javafx.geometry.HPos;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -43,20 +45,19 @@ public class MatchingTestController implements Initializable {
     private Pane linePane;
 
     private List<Flashcard> flashcards;
-    private List<Label> questionLabels = new ArrayList<>();
-    private List<Label> answerLabels = new ArrayList<>();
+    private final List<Label> questionLabels = new ArrayList<>();
+    private final List<Label> answerLabels = new ArrayList<>();
     private Label selectedQuestion = null;
     private Label selectedAnswer = null;
     private int correctMatches = 0;
     private int wrongMatches = 0;
+    private int chapter_id;
+    private String chapter_name;
 
     public void setFlashcards(List<Flashcard> flashcards) {
         this.flashcards = new ArrayList<>(flashcards);
         initializeTest();
     }
-
-    private int chapter_id;
-    private String chapter_name;
 
     public void setChapter_id(int id) {
         this.chapter_id = id;

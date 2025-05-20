@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -9,12 +10,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -25,9 +27,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static javafx.fxml.FXMLLoader.load;
-
 public class ChapterController {
+    static private int category_id;
+    static private String category_name;
+    List<Flashcard> flashcards;
     @FXML
     private Button buttonNew;
     @FXML
@@ -36,30 +39,21 @@ public class ChapterController {
     private Button buttonEdit;
     @FXML
     private Label labelChapter;
-
     private int chapter_id;
     private String chapter_name;
-
     @FXML
     private Pagination pagination;
-
     @FXML
     private Label atentionare;
-
-    List<Flashcard> flashcards;
-
     @FXML
     private Button buttonBack;
 
-    static private int category_id;
-    static private String category_name;
-
     public void setCategoryId(int category_id) {
-        this.category_id = category_id;
+        ChapterController.category_id = category_id;
     }
 
     public void setCategoryName(String category_name) {
-        this.category_name = category_name;
+        ChapterController.category_name = category_name;
     }
 
     private void loadFlashcards() {
@@ -77,7 +71,7 @@ public class ChapterController {
             }
             con.close();
 
-            int pageCount = Math.max(flashcards.size(),1);
+            int pageCount = Math.max(flashcards.size(), 1);
             pagination.setPageCount(pageCount);
             pagination.setPageCount(pageCount);
             pagination.setPageFactory(this::createPage);
@@ -87,9 +81,9 @@ public class ChapterController {
         }
     }
 
-    public void setChapterName(String string){
+    public void setChapterName(String string) {
         chapter_name = string;
-        labelChapter.setText(labelChapter.getText()+" "+string);
+        labelChapter.setText(labelChapter.getText() + " " + string);
     }
 
     public void setChapter_Id(int id) {
@@ -99,46 +93,43 @@ public class ChapterController {
 
 
     private Node createPage(int index) {
-    if (flashcards == null || flashcards.isEmpty() || index >= flashcards.size()) {
-        Label emptyLabel = new Label("No flashcards available.");
-        return new StackPane(emptyLabel);
+        if (flashcards == null || flashcards.isEmpty() || index >= flashcards.size()) {
+            Label emptyLabel = new Label("No flashcards available.");
+            return new StackPane(emptyLabel);
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/FlashcardView.fxml"));
+            StackPane root = loader.load();
+
+            FlashcardController controller = loader.getController();
+            Flashcard flashcard = flashcards.get(index);
+
+            // Set text for question and answer
+            controller.getFrontTextArea().setText(flashcard.getQuestion());
+            controller.getBackTextArea().setText(flashcard.getAnswer());
+
+            // Set images (if available)
+            if (flashcard.getImage_q() != null) {
+                Image frontImage = new Image(new ByteArrayInputStream(flashcard.getImage_q()));
+                controller.getFrontImageView().setImage(frontImage);
+            } else {
+                controller.getFrontImageView().setVisible(false);
+            }
+
+            if (flashcard.getImage_a() != null) {
+                Image backImage = new Image(new ByteArrayInputStream(flashcard.getImage_a()));
+                controller.getBackImageView().setImage(backImage);
+            } else {
+                controller.getBackImageView().setVisible(false);
+            }
+
+            return root;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new StackPane(new Label("Could not load flashcard"));
+        }
     }
-
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Flashcards/FlashcardView.fxml"));
-        StackPane root = loader.load();
-
-        FlashcardController controller = loader.getController();
-        Flashcard flashcard = flashcards.get(index);
-
-        // Set text for question and answer
-        controller.getFrontTextArea().setText(flashcard.getQuestion());
-        controller.getBackTextArea().setText(flashcard.getAnswer());
-
-        // Set images (if available)
-        if (flashcard.getImage_q() != null) {
-            Image frontImage = new Image(new ByteArrayInputStream(flashcard.getImage_q()));
-            controller.getFrontImageView().setImage(frontImage);
-        }
-        else{
-            controller.getFrontImageView().setVisible(false);
-        }
-
-        if (flashcard.getImage_a() != null) {
-            Image backImage = new Image(new ByteArrayInputStream(flashcard.getImage_a()));
-            controller.getBackImageView().setImage(backImage);
-        }
-        else{
-            controller.getBackImageView().setVisible(false);
-        }
-
-        return root;
-    } catch (IOException e) {
-        e.printStackTrace();
-        return new StackPane(new Label("Could not load flashcard"));
-    }
-}
-
 
 
     //La crearea unui falshcard, dau mai departe, numele si id-ul capitolului sau.
@@ -149,8 +140,8 @@ public class ChapterController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if(ThemeManager.darkMode){
-                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
             CreateFlashcardController controller = loader.getController();
@@ -170,8 +161,8 @@ public class ChapterController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-                if(ThemeManager.darkMode){
-                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                if (ThemeManager.darkMode) {
+                    String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
                 DeleteFlashcardController controller = loader.getController();
@@ -196,8 +187,8 @@ public class ChapterController {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-                if(ThemeManager.darkMode){
-                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                if (ThemeManager.darkMode) {
+                    String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
                 EditFlashcardController controller = loader.getController();
@@ -243,8 +234,7 @@ public class ChapterController {
             }
             stage.setScene(scene);
             stage.show();
-        }
-        else{
+        } else {
             atentionare.setText("Not enough flashcards available (minimum 5)!");
             atentionare.setStyle("-fx-text-fill: red;");
         }
@@ -281,8 +271,7 @@ public class ChapterController {
             }
             stage.setScene(scene);
             stage.show();
-        }
-        else{
+        } else {
             atentionare.setText("Not enough flashcards available (minimum 5)!");
             atentionare.setStyle("-fx-text-fill: red;");
         }
@@ -318,8 +307,7 @@ public class ChapterController {
             }
             stage.setScene(scene);
             stage.show();
-        }
-        else{
+        } else {
             atentionare.setText("Not enough flashcards available (minimum 5)!");
             atentionare.setStyle("-fx-text-fill: red;");
         }
@@ -341,8 +329,8 @@ public class ChapterController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if(ThemeManager.darkMode){
-                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
             stage.setScene(scene);

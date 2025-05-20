@@ -5,16 +5,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.EditChapterController">
+<VBox spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.unibuc.mds.memoreasy.Controllers.EditChapterController">
     <padding>
-        <Insets bottom="20" left="20" right="20" top="20" />
+        <Insets bottom="20" left="20" right="20" top="20"/>
     </padding>
 
-    <Label style="-fx-font-size: 20px;" text="Edit Chapter Name" />
+    <Label style="-fx-font-size: 20px;" text="Edit Chapter Name"/>
 
-    <TextField fx:id="newChapterName" promptText="New name" />
+    <TextField fx:id="newChapterName" promptText="New name"/>
 
-    <Button fx:id="saveButton" onAction="#edit" text="Save Changes" />
-    <Label fx:id="errorLabel" textFill="red" />
+    <Button fx:id="saveButton" onAction="#edit" text="Save Changes"/>
+    <Label fx:id="errorLabel" textFill="red"/>
 </VBox>

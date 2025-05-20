@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,16 +21,16 @@ public class DeleteChapterController {
     private int idChapter;
     private int id_category;
     private String category_name;
+    @FXML
+    private Button buttonDelete;
 
     public void setCategoryId(int category_id) {
         this.id_category = category_id;
     }
+
     public void setCategoryName(String category_name) {
         this.category_name = category_name;
     }
-
-    @FXML
-    private Button buttonDelete;
 
     //Ma intorc la categoria corespunzatoare pe care am primit-o prin acea pereche (nume, id).
     public void delete(ActionEvent event) throws SQLException, IOException {
@@ -50,8 +52,8 @@ public class DeleteChapterController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
             scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
         }
         stage.setScene(scene);

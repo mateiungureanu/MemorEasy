@@ -36,8 +36,10 @@ public class EvaluateYourselfController implements Initializable {
     private VBox testControls;
     @FXML
     private Label progress;
-    @FXML private Button knowButton;
-    @FXML private Button dontKnowButton;
+    @FXML
+    private Button knowButton;
+    @FXML
+    private Button dontKnowButton;
     @FXML
     private FlashcardController flashcardController;
 
@@ -48,16 +50,17 @@ public class EvaluateYourselfController implements Initializable {
     private List<Flashcard> flashcards;
 
 
-    public void setChapter_id(int chapterId){
-        chapter_id=chapterId;
+    public void setChapter_id(int chapterId) {
+        chapter_id = chapterId;
     }
-    public void setChapter_name(String chapterName){
-        chapter_name=chapterName;
+
+    public void setChapter_name(String chapterName) {
+        chapter_name = chapterName;
     }
 
 
-    public void setFlashcards(List<Flashcard> flashcards){
-        this.flashcards=new ArrayList<>(flashcards);
+    public void setFlashcards(List<Flashcard> flashcards) {
+        this.flashcards = new ArrayList<>(flashcards);
         loadFlashcardView();
         if (!flashcards.isEmpty()) {
             displayFlashcard(flashcards.get(0));
@@ -111,19 +114,17 @@ public class EvaluateYourselfController implements Initializable {
 
         flashcardController.getFrontTextArea().setText(flashcard.getQuestion());
         flashcardController.getBackTextArea().setText(flashcard.getAnswer());
-        if(flashcard.getImage_q()!=null){
+        if (flashcard.getImage_q() != null) {
             flashcardController.getFrontImageView().setImage(new Image(new ByteArrayInputStream(flashcard.getImage_q())));
 
-        }
-        else {
+        } else {
             flashcardController.getFrontImageView().setImage(null); // elimina imaginea anterioara
         }
 
-        if(flashcard.getImage_a()!=null){
+        if (flashcard.getImage_a() != null) {
             flashcardController.getBackImageView().setImage(new Image(new ByteArrayInputStream(flashcard.getImage_a())));
 
-        }
-        else {
+        } else {
             flashcardController.getBackImageView().setImage(null); // elimina imaginea anterioara
         }
     }
@@ -134,19 +135,19 @@ public class EvaluateYourselfController implements Initializable {
 
     private void endEvaluation() {
         stackPane.getChildren().clear();
-        VBox vBox=new VBox();
+        VBox vBox = new VBox();
         Label finalScoreLabel = new Label("Evaluation is over!\nFinal score: " + correctAnswers + "/" + flashcards.size());
         String color;
-        if(correctAnswers<=flashcards.size()/4){
-            color="red";
-        } else if (correctAnswers>=flashcards.size()*3/4) {
-            color="green";
+        if (correctAnswers <= flashcards.size() / 4) {
+            color = "red";
+        } else if (correctAnswers >= flashcards.size() * 3 / 4) {
+            color = "green";
         } else {
-            color="DarkGoldenRod";
+            color = "DarkGoldenRod";
         }
-        finalScoreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: " + color +";");
+        finalScoreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: " + color + ";");
         Button back = new Button("Go back");
-        back.setOnAction(event ->{
+        back.setOnAction(event -> {
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/ChapterView.fxml"));
@@ -158,8 +159,8 @@ public class EvaluateYourselfController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-                if(ThemeManager.darkMode){
-                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                if (ThemeManager.darkMode) {
+                    String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
                 stage.setScene(scene);
@@ -169,18 +170,18 @@ public class EvaluateYourselfController implements Initializable {
             }
         });
         vBox.setAlignment(Pos.CENTER);
-        vBox.getChildren().addAll(finalScoreLabel,back);
+        vBox.getChildren().addAll(finalScoreLabel, back);
 
         stackPane.setAlignment(Pos.CENTER);
         stackPane.getChildren().add(vBox);
 
         try {
             Connection con = DatabaseUtils.getConnection();
-            String sql="INSERT INTO audit(id_user,action,activity_date,no_flashcards) VALUES(?,?,CURRENT_DATE,?)";
-            PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setInt(1,DatabaseUtils.getIdUser());
-            stmt.setInt(2,1);//Primul tip de teste
-            stmt.setInt(3,correctAnswers);
+            String sql = "INSERT INTO audit(id_user,action,activity_date,no_flashcards) VALUES(?,?,CURRENT_DATE,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, DatabaseUtils.getIdUser());
+            stmt.setInt(2, 1);//Primul tip de teste
+            stmt.setInt(3, correctAnswers);
             stmt.executeUpdate();
             stmt.close();
             con.close();

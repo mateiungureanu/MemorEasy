@@ -1,5 +1,5 @@
-
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
 import javafx.event.ActionEvent;
@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,18 +23,18 @@ public class EditChapterController {
     private int idChapter;
     private int id_category;
     private String category_name;
-
-    public void setCategoryId(int category_id) {
-        this.id_category = category_id;
-    }
-    public void setCategoryName(String category_name) {
-        this.category_name = category_name;
-    }
-
     @FXML
     private Button saveButton;
     @FXML
     private TextField newChapterName;
+
+    public void setCategoryId(int category_id) {
+        this.id_category = category_id;
+    }
+
+    public void setCategoryName(String category_name) {
+        this.category_name = category_name;
+    }
 
     public void edit(ActionEvent event) throws SQLException, IOException {
         if (event.getSource() == saveButton) {
@@ -56,21 +57,22 @@ public class EditChapterController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if(ThemeManager.darkMode){
-                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
             stage.setScene(scene);
             stage.show();
         }
     }
-    public void loadChapterName(){
-        String sql2= "select name from chapter where id_chapter = ?";
+
+    public void loadChapterName() {
+        String sql2 = "select name from chapter where id_chapter = ?";
         try {
-            Connection con=DatabaseUtils.getConnection();
-            PreparedStatement stmt2=con.prepareStatement(sql2);
-            stmt2.setInt(1,idChapter);
-            ResultSet rs2=stmt2.executeQuery();
+            Connection con = DatabaseUtils.getConnection();
+            PreparedStatement stmt2 = con.prepareStatement(sql2);
+            stmt2.setInt(1, idChapter);
+            ResultSet rs2 = stmt2.executeQuery();
 
             if (rs2.next()) {
                 newChapterName.setText(rs2.getString(1)); // sau rs2.getString(1)

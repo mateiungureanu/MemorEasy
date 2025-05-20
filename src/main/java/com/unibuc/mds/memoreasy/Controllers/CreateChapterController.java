@@ -17,8 +17,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static javafx.fxml.FXMLLoader.load;
-
 public class CreateChapterController {
     @FXML
     private TextField textField;
@@ -30,6 +28,7 @@ public class CreateChapterController {
     public void setCategoryId(int category_id) {
         this.id_category = category_id;
     }
+
     public void setCategoryName(String category_name) {
         this.category_name = category_name;
     }
@@ -37,14 +36,14 @@ public class CreateChapterController {
     //Ma intorc la categoria corespunzatoare pe care am primit-o prin acea pereche (nume, id).
     public void create(ActionEvent event) throws SQLException, IOException {
         String name = textField.getText();
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             name = "New Chapter without name";
         }
         Connection con = DatabaseUtils.getConnection();
         String sql = "INSERT INTO CHAPTER( id_category, name,last_accessed) VALUES (?, ?, CURRENT_TIMESTAMP)";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setInt(1, id_category);
-        pstmt.setString(2,name);
+        pstmt.setString(2, name);
         pstmt.executeUpdate();
         con.close();
 
@@ -56,8 +55,8 @@ public class CreateChapterController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-        if(ThemeManager.darkMode){
-            String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
             scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
         }
         stage.setScene(scene);

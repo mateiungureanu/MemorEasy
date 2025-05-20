@@ -4,15 +4,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unibuc.mds.memoreasy.Controllers.DeleteCategoryController">
-   <children>
-      <Label layoutY="138.0" prefHeight="18.0" prefWidth="600.0" text="    Attention: If you press this, you will delete all chapters and all flashcards associated!" textAlignment="JUSTIFY">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Button fx:id="deleteButton" layoutX="216.0" layoutY="200.0" mnemonicParsing="false" onAction="#delete" styleClass="btn-danger" text="Delete" />
-      <Button layoutX="342.0" layoutY="200.0" onAction="#delete" styleClass="btn-warning" text="Cancel" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.unibuc.mds.memoreasy.Controllers.DeleteCategoryController">
+    <children>
+        <Label layoutY="138.0" prefHeight="18.0" prefWidth="600.0"
+               text="    Attention: If you press this, you will delete all chapters and all flashcards associated!"
+               textAlignment="JUSTIFY">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+        <Button fx:id="deleteButton" layoutX="216.0" layoutY="200.0" mnemonicParsing="false" onAction="#delete"
+                styleClass="btn-danger" text="Delete"/>
+        <Button layoutX="342.0" layoutY="200.0" onAction="#delete" styleClass="btn-warning" text="Cancel"/>
+    </children>
 </AnchorPane>

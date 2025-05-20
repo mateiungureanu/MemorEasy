@@ -1,10 +1,12 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,18 +21,19 @@ public class HomePageController implements Initializable {
 
     @FXML
     private Label dailyStreakLabel;
+    @FXML
+    private LineChart<String, Number> performanceChart;
 
-    void addName(String name){
-        labelWelcome.setText("Welcome, "+name+"!");
+    void addName(String name) {
+        labelWelcome.setText("Welcome, " + name + "!");
     }
 
-    private void setDailyStreakLabel(int streak){
+    private void setDailyStreakLabel(int streak) {
         String number;
-        if(streak==-1){
-            number="x";
-        }
-        else{
-            number=Integer.toString(streak);
+        if (streak == -1) {
+            number = "x";
+        } else {
+            number = Integer.toString(streak);
         }
         dailyStreakLabel.setText("Daily Streak: " + number);
     }
@@ -40,16 +43,14 @@ public class HomePageController implements Initializable {
         setDailyStreakLabel(DatabaseUtils.getCurrentStreak());
         loadWeeklyPerformance();
     }
-    @FXML
-    private LineChart<String, Number> performanceChart;
 
     private void loadWeeklyPerformance() {
         try (Connection connection = DatabaseUtils.getConnection()) {
             String query = """
-            SELECT MIN(activity_date) AS start_date
-            FROM audit
-            WHERE id_user = ?;
-        """;
+                        SELECT MIN(activity_date) AS start_date
+                        FROM audit
+                        WHERE id_user = ?;
+                    """;
 
             PreparedStatement startDateStatement = connection.prepareStatement(query);
             int userId = DatabaseUtils.getIdUser();
@@ -73,15 +74,15 @@ public class HomePageController implements Initializable {
             LocalDate oneYearAgo = LocalDate.now().minusWeeks(52);
             LocalDate effectiveStartDate = startDate.isBefore(oneYearAgo) ? oneYearAgo : startDate;
             String performanceQuery = """
-            SELECT
-                YEAR(activity_date) AS year,
-                WEEK(activity_date, 0) AS week,
-                SUM(no_flashcards) AS total_flashcards
-            FROM audit
-            WHERE id_user = ? AND activity_date >= ?
-            GROUP BY year, week
-            ORDER BY year, week;
-        """;
+                        SELECT
+                            YEAR(activity_date) AS year,
+                            WEEK(activity_date, 0) AS week,
+                            SUM(no_flashcards) AS total_flashcards
+                        FROM audit
+                        WHERE id_user = ? AND activity_date >= ?
+                        GROUP BY year, week
+                        ORDER BY year, week;
+                    """;
 
             PreparedStatement performanceStatement = connection.prepareStatement(performanceQuery);
             performanceStatement.setInt(1, userId);

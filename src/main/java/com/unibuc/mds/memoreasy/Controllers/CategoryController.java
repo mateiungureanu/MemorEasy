@@ -1,5 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
-import com.unibuc.mds.memoreasy.Models.Category;
+
 import com.unibuc.mds.memoreasy.Models.Chapter;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -18,10 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -30,33 +30,26 @@ import java.util.ResourceBundle;
 import static javafx.fxml.FXMLLoader.load;
 
 public class CategoryController implements Initializable {
+    private final String[] criteria = new String[]{"Name(↑)", "Name(↓)", "Last Accessed(↑)", "Last Accessed(↓)"};
+    List<Chapter> chapters;
     @FXML
     private Label labelCategory;
-
     @FXML
     private Pagination pagination;
-
     @FXML
     private Button buttonNew;
     @FXML
     private Button buttonDelete;
     @FXML
     private Button buttonEdit;
-
     @FXML
     private Label atentionare;
-
     @FXML
     private Button buttonBack;
-
     @FXML
     private ChoiceBox<String> choiceBox;
-    private final String []criteria=new String[]{"Name(↑)","Name(↓)","Last Accessed(↑)",
-                                        "Last Accessed(↓)"};
-
     private int category_id;
     private String category_name;
-    List<Chapter> chapters;
 
     private void loadChapters() {
         String q = "SELECT * FROM CHAPTER WHERE id_category=" + category_id;
@@ -84,26 +77,25 @@ public class CategoryController implements Initializable {
     }
 
 
-    public void setCategory_id(int id){
+    public void setCategory_id(int id) {
         category_id = id;
         loadChapters();
     }
 
-    public void addCategoryName(String string){
+    public void addCategoryName(String string) {
 
-        labelCategory.setText(labelCategory.getText()+" "+string);
-        category_name=string;
+        labelCategory.setText(labelCategory.getText() + " " + string);
+        category_name = string;
     }
 
 
-    public void updateLastAccessed(int id) throws SQLException{
-        String sql="UPDATE CHAPTER SET last_accessed=CURRENT_TIME WHERE id_chapter=?";
+    public void updateLastAccessed(int id) throws SQLException {
+        String sql = "UPDATE CHAPTER SET last_accessed=CURRENT_TIME WHERE id_chapter=?";
         Connection con = DatabaseUtils.getConnection();
         PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setInt(1,id);
+        stmt.setInt(1, id);
         stmt.executeUpdate();
     }
-
 
 
     //La accesarea unui capitol, dau mai departe, numele si id-ul sau.
@@ -133,8 +125,8 @@ public class CategoryController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-                if(ThemeManager.darkMode){
-                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                if (ThemeManager.darkMode) {
+                    String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
                 stage.setScene(scene);
@@ -148,7 +140,7 @@ public class CategoryController implements Initializable {
     }
 
 
-    public void sortChapters(ActionEvent event){
+    public void sortChapters(ActionEvent event) {
         switch (choiceBox.getValue()) {
             case "Name(↑)":
                 chapters.sort(Comparator.comparing(c -> c.getName().toLowerCase()));
@@ -161,7 +153,8 @@ public class CategoryController implements Initializable {
                 break;
             case "Last Accessed(↓)":
                 chapters.sort(Comparator.comparing(Chapter::getLast_accessed).reversed());
-            default: break;
+            default:
+                break;
         }
         //No. elements doesn't change
 //      pagination.setPageCount(chapters.size());
@@ -178,16 +171,16 @@ public class CategoryController implements Initializable {
     //La crearea unui capitol, dau mai departe, numele si id-ul categoriei sale.
     public void createChapter(ActionEvent event) throws IOException {
         if (event.getSource() == buttonNew) {
-            FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/CreateChapterView.fxml"));
-            Parent root=loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/CreateChapterView.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if(ThemeManager.darkMode){
-                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
-            CreateChapterController controller=loader.getController();
+            CreateChapterController controller = loader.getController();
             controller.setCategoryId(category_id);
             controller.setCategoryName(category_name);
             stage.setScene(scene);
@@ -198,24 +191,23 @@ public class CategoryController implements Initializable {
     //La stergerea unui capitol, dau mai departe, numele si id-ul categoriei sale, dar si id-ul lui.
     public void deleteChapter(ActionEvent event) throws IOException {
         if (event.getSource() == buttonDelete) {
-            if(!chapters.isEmpty()) {
-                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/DeleteChapterView.fxml"));
+            if (!chapters.isEmpty()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/DeleteChapterView.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-                if(ThemeManager.darkMode){
-                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                if (ThemeManager.darkMode) {
+                    String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
-                DeleteChapterController controller=loader.getController();
+                DeleteChapterController controller = loader.getController();
                 controller.setCategoryId(category_id);
                 controller.setCategoryName(category_name);
                 stage.setScene(scene);
                 controller.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getChapterId());
                 stage.show();
-            }
-            else{
+            } else {
                 atentionare.setText("No chapters available!");
                 atentionare.setStyle("-fx-text-fill: red;");
             }
@@ -224,24 +216,23 @@ public class CategoryController implements Initializable {
 
     public void editChapter(ActionEvent event) throws IOException {
         if (event.getSource() == buttonEdit) {
-            if(!chapters.isEmpty()) {
-                FXMLLoader loader=new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/EditChapterView.fxml"));
+            if (!chapters.isEmpty()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/EditChapterView.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-                if(ThemeManager.darkMode){
-                    String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+                if (ThemeManager.darkMode) {
+                    String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                     scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
                 }
-                EditChapterController controller=loader.getController();
+                EditChapterController controller = loader.getController();
                 controller.setCategoryId(category_id);
                 controller.setCategoryName(category_name);
                 stage.setScene(scene);
                 controller.setIdChapter(chapters.get(pagination.getCurrentPageIndex()).getChapterId());
                 stage.show();
-            }
-            else{
+            } else {
                 atentionare.setText("No chapters available!");
                 atentionare.setStyle("-fx-text-fill: orange;");
             }
@@ -251,11 +242,11 @@ public class CategoryController implements Initializable {
     public void goBack(ActionEvent event) throws IOException {
         if (event.getSource() == buttonBack) {
             Parent root = load(getClass().getResource("/com/unibuc/mds/memoreasy/Views/AllCategories/AllCategoriesView.fxml"));
-            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if(ThemeManager.darkMode){
-                String stylesheet ="/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            if (ThemeManager.darkMode) {
+                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
                 scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
             }
             stage.setScene(scene);

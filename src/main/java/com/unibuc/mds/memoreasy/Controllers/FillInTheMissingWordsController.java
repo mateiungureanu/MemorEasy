@@ -1,4 +1,5 @@
 package com.unibuc.mds.memoreasy.Controllers;
+
 import com.unibuc.mds.memoreasy.Models.Flashcard;
 import com.unibuc.mds.memoreasy.Utils.DatabaseUtils;
 import com.unibuc.mds.memoreasy.Utils.ThemeManager;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,44 +24,37 @@ import java.util.List;
 import java.util.Objects;
 
 public class FillInTheMissingWordsController {
+    int checked = 0; //daca a raspuns sau nu la intrebarea curenta
+    String missingWord; //Cuvantul lipsa
     private int chapter_id;
     private String chapter_name;
     private int currentIndex = 0;
     private int correctAnswers = 0;
     private List<Flashcard> flashcards;
-
     @FXML
-    private Label progress ;
-
+    private Label progress;
     @FXML
-    private Label question ;
-
+    private Label question;
     @FXML
-    private Label answer ;
-
+    private Label answer;
     @FXML
     private TextField word;
-
     @FXML
-    private Button nextButton ;
-
-    int checked = 0; //daca a raspuns sau nu la intrebarea curenta
-
-    String missingWord; //Cuvantul lipsa
-
+    private Button nextButton;
     @FXML
-    private Label response ;
+    private Label response;
 
-    public void setChapter_id(int chapterId){
-        chapter_id=chapterId;
+    public void setChapter_id(int chapterId) {
+        chapter_id = chapterId;
     }
-    public void setChapter_name(String chapterName){
-        chapter_name=chapterName;
+
+    public void setChapter_name(String chapterName) {
+        chapter_name = chapterName;
     }
 
 
     public void setFlashcards(List<Flashcard> flashcards) throws IOException {
-        this.flashcards=new ArrayList<>(flashcards);
+        this.flashcards = new ArrayList<>(flashcards);
         loadTest();
     }
 
@@ -70,7 +65,7 @@ public class FillInTheMissingWordsController {
         updateProgress();
 
         String Question = flashcards.get(currentIndex).getQuestion();
-        question.setText("Question: "+Question);
+        question.setText("Question: " + Question);
         String Answer = flashcards.get(currentIndex).getAnswer();
         String[] words = Answer.split("\\s+"); // Imparte raspunsul în cuvinte
 
@@ -78,25 +73,24 @@ public class FillInTheMissingWordsController {
         missingWord = words[randomIndex];
         words[randomIndex] = "_____"; // Inlocuiește cuvantul ales cu un spațiu gol
 
-                // Reconstruiește propoziția
+        // Reconstruiește propoziția
         String answerWithBlank = String.join(" ", words);
 
-        answer.setText("Answer: "+answerWithBlank); // Afișeaza propoziția cu spațiul gol
+        answer.setText("Answer: " + answerWithBlank); // Afișeaza propoziția cu spațiul gol
 
     }
 
     private void updateProgress() {
         if (currentIndex == flashcards.size()) {
             progress.setText("Your final Scor: " + correctAnswers + "/" + flashcards.size());
-        }
-        else {
+        } else {
             progress.setText("Scor: " + correctAnswers + "/" + flashcards.size());
         }
     }
 
     public void checkButtonClicked() throws IOException {
         String Answer = word.getText();
-        if(checked == 0) {
+        if (checked == 0) {
             if (Answer.isEmpty() || !Objects.equals(Answer.toLowerCase(), missingWord.toLowerCase())) {
                 response.setText("Wrong Answer, correct answer is: *" + missingWord + "* !");
                 response.setStyle("-fx-text-fill: red;");
@@ -111,26 +105,24 @@ public class FillInTheMissingWordsController {
             }
             updateProgress();
             checked = 1;
-        }
-        else {
+        } else {
             response.setText("You have checked already!");
             response.setStyle("-fx-text-fill: orange;");
         }
     }
 
     public void nextButtonClicked(ActionEvent event) throws IOException, SQLException {
-        if(checked == 0) {
+        if (checked == 0) {
             response.setText("You haven't checked any answers yet!");
             response.setStyle("-fx-text-fill: orange;");
-        }
-        else {
+        } else {
             if (currentIndex == flashcards.size()) {// La sfarsit inserez in baza de date ce a facut si ma intorc la chapter.
                 Connection con = DatabaseUtils.getConnection();
-                String sql="INSERT INTO audit(id_user,action,activity_date,no_flashcards) VALUES(?,?,CURRENT_DATE,?)";
-                PreparedStatement stmt=con.prepareStatement(sql);
-                stmt.setInt(1,DatabaseUtils.getIdUser());
-                stmt.setInt(2,2);//Al doilea tip de teste
-                stmt.setInt(3,correctAnswers);
+                String sql = "INSERT INTO audit(id_user,action,activity_date,no_flashcards) VALUES(?,?,CURRENT_DATE,?)";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setInt(1, DatabaseUtils.getIdUser());
+                stmt.setInt(2, 2);//Al doilea tip de teste
+                stmt.setInt(3, correctAnswers);
                 stmt.executeUpdate();
                 stmt.close();
                 con.close();

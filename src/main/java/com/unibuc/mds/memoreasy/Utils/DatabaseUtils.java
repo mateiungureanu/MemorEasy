@@ -19,12 +19,11 @@ public class DatabaseUtils {
 
     public static User authenticateUser(String username, String password) {
         String query = "SELECT * FROM user WHERE name = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 String hashedPassword = rs.getString("password");
                 if (BCrypt.checkpw(password, hashedPassword)) {
@@ -43,18 +42,17 @@ public class DatabaseUtils {
 
     public static boolean registerUser(String username, String password) {
         String query = "INSERT INTO user (name, password) VALUES (?, ?)";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
 
             if (userExists(username)) {
                 return false;
             }
 
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-            
+
             stmt.setString(1, username);
             stmt.setString(2, hashedPassword);
-            
+
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -66,12 +64,11 @@ public class DatabaseUtils {
 
     private static boolean userExists(String username) {
         String query = "SELECT COUNT(*) FROM user WHERE name = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 return rs.getInt(1) > 0;
             }
@@ -81,36 +78,35 @@ public class DatabaseUtils {
         return false;
     }
 
-    public static int getIdUser(){
+    public static int getIdUser() {
         return id_current_user;
     }
 
-    public static int getCurrentStreak(){
-        int streak=1;
+    public static int getCurrentStreak() {
+        int streak = 1;
         try {
             Connection con = getConnection();
-            String sql="SELECT activity_date FROM audit ORDER BY activity_date DESC";
-            Statement stmt=con.createStatement();
-            ResultSet rs=stmt.executeQuery(sql);
+            String sql = "SELECT activity_date FROM audit ORDER BY activity_date DESC";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
-            LocalDate localDate1,localDate2;
-            if(rs.next()){
-                localDate1= rs.getDate(1).toLocalDate();
-                while(rs.next()){
-                    localDate2=rs.getDate(1).toLocalDate();
-                    long diff = Math.abs(ChronoUnit.DAYS.between(localDate2,localDate1));
+            LocalDate localDate1, localDate2;
+            if (rs.next()) {
+                localDate1 = rs.getDate(1).toLocalDate();
+                while (rs.next()) {
+                    localDate2 = rs.getDate(1).toLocalDate();
+                    long diff = Math.abs(ChronoUnit.DAYS.between(localDate2, localDate1));
 
-                    if(diff==1){
+                    if (diff == 1) {
                         streak++;
-                    } else if (diff>1) {
+                    } else if (diff > 1) {
                         break;
                     }
-                    localDate1=localDate2;
+                    localDate1 = localDate2;
                 }
             }
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return -1;
         }
