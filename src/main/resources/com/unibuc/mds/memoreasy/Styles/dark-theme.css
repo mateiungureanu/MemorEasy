@@ -75,3 +75,61 @@
     /*-fx-text-fill: black;*/
 }
 
+
+
+.choice-box {
+    -fx-background-color: white;
+}
+
+.choice-box:hover, .choice-box:focused {
+    -fx-background-color: #cce5ff;
+}
+
+.choice-box > .label {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+.choice-box:hover > .label, .choice-box:focused > .label {
+    -fx-background-color: transparent;
+}
+
+.choice-box > .open-button {
+    -fx-background-color: white;
+}
+
+.choice-box:hover > .open-button, .choice-box:focused > .open-button {
+    -fx-background-color: #cce5ff;
+}
+
+.choice-box > .open-button > .arrow {
+    -fx-background-color: black;
+}
+
+/* Dropdown list */
+.choice-box .context-menu {
+    -fx-background-color: white;
+}
+
+.choice-box .menu-item, .choice-box .menu-item>* {
+    -fx-background-color: white;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: black;
+}
+
+/* Hover effect in dropdown */
+.choice-box .menu-item:focused {
+    -fx-background-color: #cce5ff;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.choice-box .menu-item:focused > .left-container {
+    -fx-background-color: transparent;
+}
+
