@@ -59,5 +59,9 @@ https://github.com/mateiungureanu/MemorEasy/issues?q=is%3Aissue+is%3Aclosed
 ---
 
 ### Prompt Engineering
-*To be added if relevant to the app.*
+🔗 https://github.com/mateiungureanu/MemorEasy/blob/main/Prompt%20Engineering.docx
 
+---
+
+### Video Showcase
+🔗 Youtube Link: https://www.youtube.com/watch?v=LfyjxMJr4Mo
