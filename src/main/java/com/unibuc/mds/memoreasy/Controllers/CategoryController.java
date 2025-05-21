@@ -168,24 +168,30 @@ public class CategoryController implements Initializable {
         choiceBox.setOnAction(this::sortChapters);
     }
 
-    //La crearea unui capitol, dau mai departe, numele si id-ul categoriei sale.
     public void createChapter(ActionEvent event) throws IOException {
-        if (event.getSource() == buttonNew) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/CreateChapterView.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-            if (ThemeManager.darkMode) {
-                String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
-                scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
-            }
-            CreateChapterController controller = loader.getController();
-            controller.setCategoryId(category_id);
-            controller.setCategoryName(category_name);
-            stage.setScene(scene);
-            stage.show();
+        //La crearea unui capitol, dau mai departe, numele si id-ul categoriei sale.
+        if(event.getSource() != buttonNew){
+            return;
         }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unibuc/mds/memoreasy/Views/Chapters/CreateChapterView.fxml"));
+
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+
+        if (ThemeManager.darkMode) {
+            String stylesheet = "/com/unibuc/mds/memoreasy/Styles/dark-theme.css";
+            scene.getStylesheets().add(ThemeManager.class.getResource(stylesheet).toExternalForm());
+        }
+
+        CreateChapterController controller = loader.getController();
+        controller.setCategoryId(category_id);
+        controller.setCategoryName(category_name);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
     //La stergerea unui capitol, dau mai departe, numele si id-ul categoriei sale, dar si id-ul lui.
