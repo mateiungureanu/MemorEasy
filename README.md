@@ -38,7 +38,7 @@ Click **‘View done work items’** to see ALL user stories:
 ---
 
 ### Automated Tests
-*To be added or documented.*
+🔗 Unit and integration tests: https://github.com/mateiungureanu/MemorEasy/tree/main/src/test/java/com/unibuc/mds/memoreasy
 
 ---
 
@@ -51,7 +51,10 @@ https://github.com/mateiungureanu/MemorEasy/issues?q=is%3Aissue+is%3Aclosed
 ---
 
 ### Design Patterns
-*To be documented (e.g., Singleton, Factory, Strategy, etc.)*
+1) Builder - during the data export process, I implemented an approach inspired by the Builder design pattern, in which complex objects such as Category are constructed step by step, each including dependent entities (Chapter, Flashcard). This approach facilitates a clear organization of hierarchical data, which is essential for proper serialization into JSON format (https://github.com/mateiungureanu/MemorEasy/blob/main/src/main/java/com/unibuc/mds/memoreasy/Controllers/AllCategoriesController.java)
+2) MVC (Model-View-Controller) – because our application architecture uses .fxml files, which define what the user sees (the View). Each .fxml file is associated with a corresponding Controller.java class, which handles the logic behind user interactions, such as button clicks. Additionally, both the .fxml file and its controller are typically linked to at least one Model class, which manages the underlying data and business logic.
+3) Utility – because we have a Utils package that contains the utility classes DatabaseUtils, which manages the database connection, and ThemeManager, which handles switching between dark and light modes. Both classes contain only static methods and static final constants, as they are designed to be used without instantiation (https://github.com/mateiungureanu/MemorEasy/tree/main/src/main/java/com/unibuc/mds/memoreasy/Utils).
+4) DTO (Data Transfer Object) – because we create simple objects (e.g., Category, Chapter) for import/export operations in JSON format. These objects contain only the relevant data needed for transfer, excluding unnecessary fields and without any business logic (https://github.com/mateiungureanu/MemorEasy/blob/main/src/main/java/com/unibuc/mds/memoreasy/Controllers/AllCategoriesController.java)
 
 ---
 
